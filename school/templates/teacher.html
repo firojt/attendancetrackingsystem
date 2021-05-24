@@ -1,1 +1,24 @@
-<p>I am teacher html file</p>
+
+{% extends "base_template.html" %}
+<hr/>
+
+
+{% block content %}
+<p>I am teacher html file line 3</p>
+ 
+<h1>Teachers  List</h1>
+{% if teachers %}
+<ul>
+  {% for teacher in teachers %}
+    <li>
+     {{ teacher.name }}
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+  <p>There are no teachers in the school.</p>
+{% endif %}
+
+
+<p> I am at the end line 8 from teacher page</p>
+{% endblock %}

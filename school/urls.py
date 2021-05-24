@@ -12,11 +12,12 @@ def contact(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', home),
+    # path('home/', home),
     path('contact/', contact),
     path('school/', views.school),
     path('school2/', views.school_template),
     # path('student/', views.student_template),
-    path('teacher/', views.teacher_template),
+    path('home/', views.home_template),
     path('student/', views.StudentListView.as_view(), name='students'),
+    path('teacher/', views.TeacherListView.as_view()),
 ]
