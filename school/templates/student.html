@@ -24,14 +24,19 @@
         </thead>
         <tbody>
           <tr >
+            {{ user.username }}
+            
             {% for student in students %}
+            {% if user.username == student.name %}
             <th scope="row">{{student.name}}</th>
             <td>{{student.className}}</td>
             <td>{{student.sectionName}}</td>
             <td>{{student.attendance}}</td>
             <td>{{student.attendance2}}</td>
           </tr>
+          {% endif %}
           {% endfor %}
+         
         </tbody>
       </table>
     </li>
