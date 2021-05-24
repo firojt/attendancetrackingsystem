@@ -42,6 +42,16 @@ class TeacherListView(generic.ListView):
 
 
 
+# create separeate view for redirect 
+from django.shortcuts import redirect
+
+def login_success(request):
+    if request.user.groups.filter(name = 'teacher').exists():
+        # user is an admin
+        return redirect('/teacher') 
+    elif request.user.groups.filter(name = 'student').exists():
+        # user is an admin
+        return redirect('/student') 
     
 
 

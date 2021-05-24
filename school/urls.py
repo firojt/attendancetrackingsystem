@@ -1,4 +1,6 @@
 
+from django import urls
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
@@ -11,6 +13,7 @@ def contact(request):
     return HttpResponse('Contact page')
 
 urlpatterns = [
+    url(r'login_success/$', views.login_success, name='login_success'),
     path('admin/', admin.site.urls),
     # path('home/', home),
     path('contact/', contact),
