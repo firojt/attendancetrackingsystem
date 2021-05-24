@@ -25,6 +25,11 @@ class Department(models.Model):
 class Student(models.Model):
     """Model representing a campus name"""
     name = models.CharField(max_length=200, help_text='Enter a student name')
+    className = models.CharField(max_length=200, help_text='Enter a student name')
+    sectionName = models.CharField(max_length=200, help_text='Enter a student name')
+    # attendance = models.DecimalField(max_digits = 5, decimal_places = 2)
+    attendance = models.CharField(max_length=200, help_text='Enter a student name')
+    attendance2 = models.CharField(max_length=200, help_text='Enter a student name')
 
 # Metadata
     class Meta:
