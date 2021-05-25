@@ -2,12 +2,42 @@
 <html lang="en">
 <head>
   <div class="page-header">
-    <h1>Attendance Tracking Application</h1>
+    <body style="background-color:#a3cbf1a6;"></body>
+    <div class="jumbotron">
+      <div class="container">
+        <style>
+        display-3 {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      </style>
+        <h1 class="display-3"><center><font face="Copperplate" size="20px" color="#FF7A59"><a href="/home" class="button">Application Tracking</a></font> </center></h1>
+        <body style="background-color:#a3cbf1a6;"></body>
+        <style>
+          .button {
+           background-color:rgb(219, 35, 2);
+           border-color:rgb(8, 8, 8);
+           color:white;
+           }
+         </style>
+      </div>
+    </div>
+  </div>
   </div>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}
+    <style>
+      img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+      }
+      </style>
+      <img src="/static/attendance_img.png" alt="Attendance" class="center" >
 </body>
 </html>

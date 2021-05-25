@@ -1,24 +1,49 @@
-
 {% extends "base_template.html" %}
 <hr/>
 
 
 {% block content %}
-<p>I am teacher html file line 3</p>
+<p>I am teacher html file line 6</p>
  
-<h1>Teachers  List</h1>
+<div class = "container">
+<h1>Teacher List size is =  {{teachers | length}}</h1>
 {% if teachers %}
 <ul>
-  {% for teacher in teachers %}
+  
     <li>
-     {{ teacher.name }}
+     <!-- display teacher details here -->
+     <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Class</th>
+            <th scope="col">Section</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            {{ user.username }}
+            
+            {% for teacher in teachers %}
+            {% if user.username == teacher.name %}
+            <th scope="row">{{teacher.name}}</th>
+            <td>{{teacher.className}}</td>
+            <td>{{teacher.sectionName}}</td>
+            <td>{{teacher.attendance}}</td>
+            <td>{{teacher.attendance2}}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+         
+        </tbody>
+      </table>
     </li>
-  {% endfor %}
+  
 </ul>
 {% else %}
   <p>There are no teachers in the school.</p>
 {% endif %}
+</div>
 
-
-<p> I am at the end line 8 from teacher page</p>
+<p> I am at the end line 50 from teacher page</p>
 {% endblock %}

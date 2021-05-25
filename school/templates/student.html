@@ -3,10 +3,9 @@
 
 
 {% block content %}
-<p>I am student html file line 3</p>
  
 <div class = "container">
-<h1>Student List size is =  {{students | length}}</h1>
+<h1>Total Student =  {{students | length}}</h1>
 {% if students %}
 <ul>
   
@@ -47,5 +46,4 @@
 {% endif %}
 </div>
 
-<p> I am at the end line 8 from student page</p>
 {% endblock %}
