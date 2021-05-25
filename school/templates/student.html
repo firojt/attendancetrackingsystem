@@ -103,8 +103,6 @@
               <th scope="col">Course Name</th>
               <th scope="col">Course Credit</th>
               <th scope="col">Attendance</th>
-              <th scope="col">student</th>
-              <th scope="col">isPresent</th>
             </tr>
           </thead>
           <tbody>
@@ -114,11 +112,9 @@
               user =  '{{user.username|stringformat:'s'}}'    
               student = '{{attendace.student|stringformat:'s'}}' <br/>
               {% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
-              <th scope="row">{{attendace.id}}</th>
+              <th scope="row">{{attendace.course}}</th>
+              <td>{{attendace.course.credit}}</td>
               <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td>
-              <td>{{attendace.course.credi}}</td>
-              <td>{{attendace.student}}</td>
-              <td>{{attendace.isPresent}}</td>
             </tr>
             {% endif %}
             {% endfor %}
