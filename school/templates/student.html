@@ -56,7 +56,9 @@
                   {% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
                   <th scope="row">{{attendace.course}}</th>
                   <td>{{attendace.course.credit}}</td>
-                  <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td>
+                  <!-- <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td> -->
+                  <td>{% widthratio attendace.totalAttendanceUptoToday attendace.course.totalClassDay 100 %} %</td>
+                  
                </tr>
                {% endif %}
                {% endfor %}
