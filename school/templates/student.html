@@ -111,14 +111,16 @@
             <tr >
               
               {% for attendace in attendances %}
-              user =  '{{user.username|stringformat:'s'}}''   <br/>
+              user =  '{{user.username|stringformat:'s'}}'    
+              student = '{{attendace.student|stringformat:'s'}}' <br/>
+              {% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
               <th scope="row">{{attendace.id}}</th>
-              <td>{{attendace.totalAttendanceUptoToday}}</td>
+              <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td>
               <td>{{attendace.course.credi}}</td>
               <td>{{attendace.student}}</td>
               <td>{{attendace.isPresent}}</td>
             </tr>
-           
+            {% endif %}
             {% endfor %}
            
           </tbody>
