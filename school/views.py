@@ -70,6 +70,8 @@ def student_template(request):
     }
     return render(request, 'student.html', context)
 
+def logout(request):
+    return render(request, 'logout.html')
 
 from django.views import generic
 
@@ -80,6 +82,9 @@ class StudentListView(generic.ListView):
     print(queryset)
     print("from 1 ")
     template_name = 'student.html'  # Specify your own template name/location
+
+def getTotalDays(course,startDate, endDate):
+    return 25
 
 # alterante student list view 
 def studentAndCourseView(request):

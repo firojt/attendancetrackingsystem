@@ -1,43 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <div class="page-header">
-    <body style="background-color:#a3cbf1a6;"></body>
-    <div class="jumbotron">
-      <div class="container">
-        <style>
-        display-3 {
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-        }
-      </style>
-        <h1 class="display-3"><center><font face="Copperplate" size="20px" color="#FF7A59"><a href="/home" class="button">Application Tracking</a></font> </center></h1>
-        <body style="background-color:#a3cbf1a6;"></body>
-        <style>
-          .button {
-           background-color:rgb(219, 35, 2);
-           border-color:rgb(8, 8, 8);
-           color:white;
-           }
-         </style>
-      </div>
-    </div>
-  </div>
-  </div>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+
+
+<!-- navbar -->
+<div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li><a href='/home'><button class="btn btn-primary my-2 my-sm-0" type="submit">Application Tracking System</button></a></li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/courses">Courses</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#">Contact</a>
+      </li>
+    </ul>
+
+    <a href='/logout'><button class="btn btn-warning my-2 my-sm-0" type="submit">Logout</button></a>
+
+  </div>
+</nav>
+</div>
+
+
+
     {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
     {% block content %}<!-- default content text (typically empty) -->{% endblock %}
-    <style>
-      img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 30px;
-      }
-      </style>
-      <img src="/static/attendance_img.png" alt="Attendance" class="center" >
+    
+      <img src="/static/attendance_img.png" alt="Attendance" class="rounded mx-auto d-block">
+
+      <!-- footer  -->
+      <div class="container">
+      <footer class="bg-light text-center text-lg-start ">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0 ">
+          <form action="">
+            <!--Grid row-->
+            <div class="row">
+              <!--Grid column-->
+              <div class="col-auto mb-4 mb-md-0">
+                <p class="pt-2">
+                  <strong>Sign up for our newsletter</strong>
+                </p>
+              </div>
+              <!--Grid column-->
+      
+              <!--Grid column-->
+              <div class="col-md-5 col-12 mb-4 mb-md-0">
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="email" id="form5Example2" class="form-control" />
+                  <label class="form-label" for="form5Example2">Email address</label>
+                </div>
+              </div>
+              <!--Grid column-->
+      
+              <!--Grid column-->
+              <div class="col-auto mb-4 mb-md-0">
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary mb-4">
+                  Subscribe
+                </button>
+              </div>
+              <!--Grid column-->
+            </div>
+            <!--Grid row-->
+          </form>
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2020 Copyright:
+          <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div>
+        <!-- Copyright -->
+      </footer>
+    </div>
 </body>
 </html>
