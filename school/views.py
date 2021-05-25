@@ -2,7 +2,7 @@
 from school.models import Student, Teacher, Course,Attendance
 from django.views import generic
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, response
 import sys
 import logging
 
