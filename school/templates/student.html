@@ -1,133 +1,72 @@
 {% extends "base_template.html" %}
 <hr/>
-
-
 {% block content %}
- 
 <div class = "container">
-<h1>Total Student =  {{students | length}}</h1>
-{% if students %}
-<ul>
-  
-    <li>
-     <!-- display student details here -->
-     <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">Name</th>
-            <th scope="col">DOB</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Classs</th>
-            <!-- <th scope="col">Attendance(string)</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr >
-            {{ user.username }}
-            
-            {% for student in students %}
-            {% if user.username == student.name %}
-            <th scope="row">{{student.name}}</th>
-            <td>{{student.dob}}</td>
-            <td>{{student.phone}}</td>
-            <td>{{student.attendance}}</td>
-            <!-- <td>{{student.attendance2}}</td> -->
-          </tr>
-          {% endif %}
-          {% endfor %}
-         
-        </tbody>
-      </table>
-    </li>
-  
-</ul>
-{% else %}
-  <p>There are no students in the school.</p>
-{% endif %}
-</div>
-
-<!-- div to display registered course  -->
-
-<div class = "container">
-  <h1>Total Course =  {{courses | length}}</h1>
-  {% if courses %}
-  <ul>
-    
+   {% if students %}
+   <ul>
       <li>
-       <!-- display student details here -->
-       <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">id</th>
-              <th scope="col">Name</th>
-              <th scope="col">Credit</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr >
-              
-              {% for course in courses %}
-              user =  '{{user.username|stringformat:'s'}}''  course_student =  
-              '{{course.student|stringformat:'s'}}' <br/>
-              
-              {% if user.username|stringformat:"s" == course.student|stringformat:"s" %}
-              <th scope="row">{{course.id}}</th>
-              <td>{{course.name}}</td>
-              <td>{{course.credit}}</td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-           
-          </tbody>
-        </table>
+         <!-- display student details here -->
+         <table class="table table-striped">
+            <thead>
+               <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">DOB</th>
+                  <th scope="col">Phone Number</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr >
+                  <!-- {{ user.username }} -->
+                  {% for student in students %}
+                  {% if user.username == student.name %}
+                  <th scope="row">{{student.name}}</th>
+                  <td>{{student.dob}}</td>
+                  <td>{{student.phone}}</td>
+               </tr>
+               {% endif %}
+               {% endfor %}
+            </tbody>
+         </table>
       </li>
-    
-  </ul>
-  {% else %}
-    <p>There are no courses in the school.</p>
-  {% endif %}
+   </ul>
+   {% else %}
+   <p></p>
+   {% endif %}
 </div>
-
 <!-- div for attendaces -->
-
 <div class = "container">
-  <h1>Total Attendances =  {{attendaces | length}}</h1>
-  {% if courses %}
-  <ul>
-    
+   <!-- <h1>Total Attendances =  {{attendaces | length}}</h1> -->
+   {% if courses %}
+   <ul>
       <li>
-       <!-- display student details here -->
-       <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Course Name</th>
-              <th scope="col">Course Credit</th>
-              <th scope="col">Attendance</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr >
-              
-              {% for attendace in attendances %}
-              user =  '{{user.username|stringformat:'s'}}'    
-              student = '{{attendace.student|stringformat:'s'}}' <br/>
-              {% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
-              <th scope="row">{{attendace.course}}</th>
-              <td>{{attendace.course.credit}}</td>
-              <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td>
-            </tr>
-            {% endif %}
-            {% endfor %}
-           
-          </tbody>
-        </table>
+         <!-- display student details here -->
+         <table class="table table-striped">
+            <thead>
+               <tr>
+                  <th scope="col">Course Name</th>
+                  <th scope="col">Course Credit</th>
+                  <th scope="col">Attendance</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr >
+                  {% for attendace in attendances %}
+                  <!-- user =  '{{user.username|stringformat:'s'}}'    
+                  student = '{{attendace.student|stringformat:'s'}}' <br/> -->
+                  {% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
+                  <th scope="row">{{attendace.course}}</th>
+                  <td>{{attendace.course.credit}}</td>
+                  <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td>
+               </tr>
+               {% endif %}
+               {% endfor %}
+            </tbody>
+         </table>
       </li>
-    
-  </ul>
-  {% else %}
-    <p>There are no courses in the school.</p>
-  {% endif %}
+   </ul>
+   {% else %}
+   <p>There are no courses in the school.</p>
+   {% endif %}
 </div>
-
-
 {% endblock %}
+COPY TO CLIPBOARD SELECT AL
