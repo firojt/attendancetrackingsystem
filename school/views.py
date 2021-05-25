@@ -1,5 +1,5 @@
 
-from school.models import Student, Teacher, Course
+from school.models import Student, Teacher, Course,Attendance
 from django.views import generic
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -85,7 +85,8 @@ class StudentListView(generic.ListView):
 def studentAndCourseView(request):
     students = Student.objects.all
     courses = Course.objects.all
-    return render(request, 'student.html', {'courses': courses, 'students': students})
+    attendaces = Attendance.objects.all
+    return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces})
 
 
 class TeacherListView(generic.ListView):

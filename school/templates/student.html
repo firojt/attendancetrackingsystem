@@ -88,4 +88,48 @@
   {% endif %}
 </div>
 
+<!-- div for attendaces -->
+
+<div class = "container">
+  <h1>Total Attendances =  {{attendaces | length}}</h1>
+  {% if courses %}
+  <ul>
+    
+      <li>
+       <!-- display student details here -->
+       <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Course Name</th>
+              <th scope="col">Course Credit</th>
+              <th scope="col">Attendance</th>
+              <th scope="col">student</th>
+              <th scope="col">isPresent</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              
+              {% for attendace in attendances %}
+              user =  '{{user.username|stringformat:'s'}}''   <br/>
+              <th scope="row">{{attendace.id}}</th>
+              <td>{{attendace.totalAttendanceUptoToday}}</td>
+              <td>{{attendace.course.credi}}</td>
+              <td>{{attendace.student}}</td>
+              <td>{{attendace.isPresent}}</td>
+            </tr>
+           
+            {% endfor %}
+           
+          </tbody>
+        </table>
+      </li>
+    
+  </ul>
+  {% else %}
+    <p>There are no courses in the school.</p>
+  {% endif %}
+</div>
+
+
 {% endblock %}
