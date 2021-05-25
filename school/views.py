@@ -49,6 +49,9 @@ logger = logging.getLogger(__name__)
 def school(request):
     return HttpResponse('school page')
 
+def addAttendance(request):
+   logger.info("add Attendance is called")
+
 def school_template(request):
     context = {
         "first_name" : "Firoj ",

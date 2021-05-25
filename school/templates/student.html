@@ -45,7 +45,9 @@
                <tr>
                   <th scope="col">Course Name</th>
                   <th scope="col">Course Credit</th>
-                  <th scope="col">Attendance</th>
+                  <th scope="col">Total Attendance</th>
+                  <th scope="col">Current Attendance</th>
+                  <th scope="col">Add Today's Attendance</th>
                </tr>
             </thead>
             <tbody>
@@ -58,7 +60,13 @@
                   <td>{{attendace.course.credit}}</td>
                   <!-- <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td> -->
                   <td>{% widthratio attendace.totalAttendanceUptoToday attendace.course.totalClassDay 100 %} %</td>
-                  
+                  <td></td>
+                  <td>
+                   
+                      <button id="add" class="btn btn-primary">Add</button>
+                 
+                   
+                  </td>
                </tr>
                {% endif %}
                {% endfor %}
@@ -70,5 +78,9 @@
    <p>There are no courses in the school.</p>
    {% endif %}
 </div>
+
+<!-- jquery function -->
+
+
 {% endblock %}
 COPY TO CLIPBOARD SELECT AL
