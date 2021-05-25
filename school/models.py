@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.urls import reverse
 
 # Create your models here.
@@ -24,16 +25,17 @@ class Department(models.Model):
 
 class Student(models.Model):
     """Model representing a campus name"""
+    id = models.AutoField(primary_key='True', max_length=50)
     name = models.CharField(max_length=200, help_text='Enter a student name')
-    className = models.CharField(max_length=200, help_text='Enter a student name')
-    sectionName = models.CharField(max_length=200, help_text='Enter a student name')
+    dob = models.DateField(max_length=200, help_text='Enter a dob ')
+    phone = models.CharField(max_length=200, help_text='Enter a student phone no')
     # attendance = models.DecimalField(max_digits = 5, decimal_places = 2)
-    attendance = models.CharField(max_length=200, help_text='Enter a student name')
-    attendance2 = models.CharField(max_length=200, help_text='Enter a student name')
+    # attendance = models.CharField(max_length=200, help_text='Enter a student name')
+    # attendance2 = models.CharField(max_length=200, help_text='Enter a student name')
 
 # Metadata
     class Meta:
-        ordering = ['name']
+        ordering = ['-name']
 
     def __str__(self):
         """String for representing the Model object."""
@@ -41,20 +43,22 @@ class Student(models.Model):
 
 class Teacher(models.Model):
     """Model representing a campus name"""
+    id = models.AutoField(primary_key='True', max_length=50)
     name = models.CharField(max_length=200, help_text='Enter a student name')
-    className = models.CharField(max_length=200, help_text='Enter a student name')
-    sectionName = models.CharField(max_length=200, help_text='Enter a student name')
 
     def __str__(self):
         """String for representing the Model object."""
         return self.name
 
+# class is course for us- class is a reserved keyword
 class Course(models.Model):
-    Department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    id = models.CharField(primary_key='True', max_length=50)
+    
+    id = models.AutoField(primary_key='True', max_length=50)
     name = models.CharField(max_length=50)
-    shortname = models.CharField(max_length=50, default='X')
-
+    credit = models.CharField(max_length=50)
+    sectionName = models.CharField(max_length=200, help_text='Enter a section name')
+    student = models.ForeignKey(Student, on_delete=CASCADE)
+    teacher = models.ForeignKey(Teacher, on_delete=CASCADE)
+    
     def __str__(self):
         return self.name
-

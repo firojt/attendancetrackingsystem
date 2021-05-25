@@ -1,0 +1,44 @@
+{% extends "base_template.html" %}
+<hr/>
+
+
+{% block content %}
+ 
+<div class = "container">
+<h1>Total Course =  {{courses | length}}</h1>
+{% if courses %}
+<ul>
+  
+    <li>
+     <!-- display student details here -->
+     <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Credit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            
+            {% for course in courses %}
+           
+            <th scope="row">{{course.id}}</th>
+            <td>{{course.name}}</td>
+            <td>{{course.credit}}</td>
+          </tr>
+    
+          {% endfor %}
+         
+        </tbody>
+      </table>
+    </li>
+  
+</ul>
+{% else %}
+  <p>There are no courses in the school.</p>
+{% endif %}
+</div>
+
+{% endblock %}

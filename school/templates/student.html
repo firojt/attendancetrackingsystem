@@ -15,10 +15,10 @@
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Class</th>
-            <th scope="col">Section</th>
-            <th scope="col">Attendance(%)</th>
-            <th scope="col">Attendance(string)</th>
+            <th scope="col">DOB</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Classs</th>
+            <!-- <th scope="col">Attendance(string)</th> -->
           </tr>
         </thead>
         <tbody>
@@ -28,10 +28,10 @@
             {% for student in students %}
             {% if user.username == student.name %}
             <th scope="row">{{student.name}}</th>
-            <td>{{student.className}}</td>
-            <td>{{student.sectionName}}</td>
+            <td>{{student.dob}}</td>
+            <td>{{student.phone}}</td>
             <td>{{student.attendance}}</td>
-            <td>{{student.attendance2}}</td>
+            <!-- <td>{{student.attendance2}}</td> -->
           </tr>
           {% endif %}
           {% endfor %}
@@ -44,6 +44,48 @@
 {% else %}
   <p>There are no students in the school.</p>
 {% endif %}
+</div>
+
+<!-- div to display registered course  -->
+
+<div class = "container">
+  <h1>Total Course =  {{courses | length}}</h1>
+  {% if courses %}
+  <ul>
+    
+      <li>
+       <!-- display student details here -->
+       <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Credit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              
+              {% for course in courses %}
+              user =  '{{user.username|stringformat:'s'}}''  course_student =  
+              '{{course.student|stringformat:'s'}}' <br/>
+              
+              {% if user.username|stringformat:"s" == course.student|stringformat:"s" %}
+              <th scope="row">{{course.id}}</th>
+              <td>{{course.name}}</td>
+              <td>{{course.credit}}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+           
+          </tbody>
+        </table>
+      </li>
+    
+  </ul>
+  {% else %}
+    <p>There are no courses in the school.</p>
+  {% endif %}
 </div>
 
 {% endblock %}

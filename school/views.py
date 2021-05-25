@@ -1,5 +1,5 @@
 
-from school.models import Student, Teacher
+from school.models import Student, Teacher, Course
 from django.views import generic
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -70,6 +70,7 @@ def student_template(request):
     }
     return render(request, 'student.html', context)
 
+
 from django.views import generic
 
 class StudentListView(generic.ListView):
@@ -79,6 +80,13 @@ class StudentListView(generic.ListView):
     print(queryset)
     print("from 1 ")
     template_name = 'student.html'  # Specify your own template name/location
+
+# alterante student list view 
+def studentAndCourseView(request):
+    students = Student.objects.all
+    courses = Course.objects.all
+    return render(request, 'student.html', {'courses': courses, 'students': students})
+
 
 class TeacherListView(generic.ListView):
     model = Teacher
@@ -102,6 +110,16 @@ def login_success(request):
         logger.info("from logger 1")
         
         return redirect('/student') 
+
+# courses list view 
+class CourseListView(generic.ListView):
+    model = Course
+    context_object_name = 'courses'   # your own name for the list as a template variable
+    queryset = Course.objects.all
+    print(queryset)
+    print("from 1 ")
+    template_name = 'courses.html'  # Specify your own template name/location
+
     
 
 
