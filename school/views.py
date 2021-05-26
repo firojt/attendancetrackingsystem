@@ -98,14 +98,42 @@ def studentAndCourseView(request):
     attendaces = Attendance.objects.all
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces})
 
-def studentAndCourseAddView(request):
-    students = Student.objects.all
-    courses = Course.objects.all
-    attendaces = Attendance.objects.all
-    logger.info("add attendance is called")
-    context = {}
+from django import forms
+
+class UserForm(forms.Form):
+    course= forms.CharField(max_length=100)
+    student= forms.CharField(max_length=100)
+    course11=forms.CharField
     
-    return render(request, 'attendanceAdded.html')
+
+
+def studentAndCourseAddView(request):
+    logger.info("add attendance is called")
+   
+
+    # form handling 
+    submitbutton= request.POST.get("submit")
+    course=''
+    student=''
+    course11=''
+
+    form= UserForm(request.POST or None)
+    if form.is_valid():
+        course= form.cleaned_data.get("course")
+        student= form.cleaned_data.get("student")
+        course11 = form.cleaned_data.get("course11")
+
+    logger.info("from form data received is course and student ")
+    logger.info(course)
+    logger.info(course11)
+    logger.info(student)
+    logger.info("post request is ")
+    logger.info(request.POST)
+
+    context= {'form': form, 'course11': course, 'student':student,
+              'submitbutton': submitbutton}
+    
+    return render(request, 'attendanceAdded.html', context)
 
 
 class TeacherListView(generic.ListView):
