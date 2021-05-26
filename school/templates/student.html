@@ -63,8 +63,8 @@
                   <td></td>
                   <td>
                    
-                      <button id="add" class="btn btn-primary">Add</button>
-                 
+                    <a href="add"><button id="add" class="btn btn-primary my-2 my-sm-0 my-add-button" type="submit">Add</button></a>
+                  
                    
                   </td>
                </tr>
@@ -83,11 +83,21 @@
 <!-- <script src="templates/logic.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+$(function() {
+  // if condition only call this if attendance for today is not done
+  $(".my-add-button").prop("disabled", false);
+});
+
+
 $( "#add" ).click(function() {
-    alert( "add button clicked" );
+    // alert( "add button clicked" );
+$("#add").attr("disabled", false);
     console.log('add button clicked');
   });
-</script>
+// $("#add").attr("disabled", false);
+// $("#add").toggle();
+</script> 
 {% endblock %}
 
 COPY TO CLIPBOARD SELECT AL

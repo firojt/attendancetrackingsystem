@@ -49,8 +49,9 @@ logger = logging.getLogger(__name__)
 def school(request):
     return HttpResponse('school page')
 
-def addAttendance(request):
-   logger.info("add Attendance is called")
+
+
+   
 
 def school_template(request):
     context = {
@@ -76,6 +77,7 @@ def student_template(request):
 def logout(request):
     return render(request, 'logout.html')
 
+
 from django.views import generic
 
 class StudentListView(generic.ListView):
@@ -95,6 +97,14 @@ def studentAndCourseView(request):
     courses = Course.objects.all
     attendaces = Attendance.objects.all
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces})
+
+def studentAndCourseAddView(request):
+    students = Student.objects.all
+    courses = Course.objects.all
+    attendaces = Attendance.objects.all
+    logger.info("add attendance is called")
+    
+    return render(request, 'attendanceAdded.html')
 
 
 class TeacherListView(generic.ListView):
