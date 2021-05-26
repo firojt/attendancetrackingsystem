@@ -121,16 +121,20 @@ def teacherView(request):
     for attendace in list_attendanceList:
         logger.info(" attendance: {}:".format(attendace))
         logger.info(attendace['totalAttendanceUptoToday'])
-        currentKey = (attendace['course_id'])
-        currentKey = Course.objects.get(pk=currentKey).name
+        currentKeyInt = (attendace['course_id'])
+        currentKey = Course.objects.get(pk=currentKeyInt).name
         currentValue= (attendace['totalAttendanceUptoToday'])
+        totalSchoolDaysForCurrentClass = Course.objects.get(pk=currentKeyInt).totalClassDay
         if currentKey in my_attendance_dict:
             logger.info("if key already exist we need to add")
+            currentPercent = currentValue / totalSchoolDaysForCurrentClass * 100
+            totalPercent = (currentPercent + my_attendance_dict[currentKey] ) / 2
             totalAttendance = my_attendance_dict[currentKey] + currentValue
-            my_attendance_dict[currentKey] = totalAttendance      
+            my_attendance_dict[currentKey] = totalPercent      
         else:
             logger.info("need to add the key")
-            my_attendance_dict[currentKey] = currentValue
+            currentPercent = currentValue / totalSchoolDaysForCurrentClass * 100
+            my_attendance_dict[currentKey] = currentPercent
     logger.info("my updated attendance is below:")
     logger.info(my_attendance_dict)
 
