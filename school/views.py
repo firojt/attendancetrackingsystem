@@ -118,6 +118,7 @@ def studentAndCourseAddView(request):
     course11=''
 
     form= UserForm(request.POST or None)
+    # form.save()
     if form.is_valid():
         course= form.cleaned_data.get("course")
         student= form.cleaned_data.get("student")
@@ -125,12 +126,12 @@ def studentAndCourseAddView(request):
 
     logger.info("from form data received is course and student ")
     logger.info(course)
-    logger.info(course11)
+    logger.info(request.POST.get('course', ''))
     logger.info(student)
     logger.info("post request is ")
     logger.info(request.POST)
 
-    context= {'form': form, 'course11': course, 'student':student,
+    context= {'form': form, 'course': course, 'student':student,
               'submitbutton': submitbutton}
     
     return render(request, 'attendanceAdded.html', context)
