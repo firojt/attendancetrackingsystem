@@ -25,5 +25,5 @@ urlpatterns = [
     path('home/', views.home_template),
     path('student/', views.studentAndCourseView),
     path('student/add/', views.studentAndCourseAddView),
-    path('teacher/', views.TeacherListView.as_view()),
+    path('teacher/', views.teacherView),
 ]

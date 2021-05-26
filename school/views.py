@@ -100,6 +100,15 @@ def studentAndCourseView(request):
     attendaces = Attendance.objects.all
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces})
 
+# alterante student list view 
+def teacherView(request):
+    students = Student.objects.all
+    courses = Course.objects.all
+    attendaces = Attendance.objects.all
+    teachers = Teacher.objects.all
+    return render(request, 'teacher.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'teachers':teachers})
+
+
 from django import forms
 
 class UserForm(forms.Form):
