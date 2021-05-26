@@ -103,6 +103,7 @@ def studentAndCourseAddView(request):
     courses = Course.objects.all
     attendaces = Attendance.objects.all
     logger.info("add attendance is called")
+    context = {}
     
     return render(request, 'attendanceAdded.html')
 

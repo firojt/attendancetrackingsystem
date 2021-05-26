@@ -62,10 +62,12 @@
                   <td>{% widthratio attendace.totalAttendanceUptoToday attendace.course.totalClassDay 100 %} %</td>
                   <td></td>
                   <td>
-                   
-                    <a href="add"><button id="add" class="btn btn-primary my-2 my-sm-0 my-add-button" type="submit">Add</button></a>
-                  
-                   
+                   <form action="add/" method="post" id="buttonForm">
+                     {% csrf_token %}
+                    <input type="hidden" name="course" value="{{attendace.course}}" />
+                    <input type="hidden" name="student" value="{{attendace.student}}" />
+                    <button id="add" class="btn btn-primary my-2 my-sm-0 my-add-button" form="buttonForm" type="submit" name="add" value="Add">Add</button>
+                  </form>
                   </td>
                </tr>
                {% endif %}
