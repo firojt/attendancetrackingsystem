@@ -110,7 +110,8 @@ def teacherView(request):
     # attendacesList = Attendance.objects.filter(id!=0)
     # logger.info(type(Attendance.objects.all().values_list(flat=True) ))
 
-
+    logger.info("get particular course name")
+    logger.info(Course.objects.get(pk=1))
     attendanceList = Attendance.objects.values()             # return ValuesQuerySet object
     list_attendanceList = [entry for entry in attendanceList]  # converts ValuesQuerySet into Python list
 
@@ -120,7 +121,8 @@ def teacherView(request):
     for attendace in list_attendanceList:
         logger.info(" attendance: {}:".format(attendace))
         logger.info(attendace['totalAttendanceUptoToday'])
-        currentKey = str(attendace['course_id'])
+        currentKey = (attendace['course_id'])
+        currentKey = Course.objects.get(pk=currentKey)
         currentValue= (attendace['totalAttendanceUptoToday'])
         if currentKey in my_attendance_dict:
             logger.info("if key already exist we need to add")
