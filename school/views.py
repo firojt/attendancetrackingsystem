@@ -118,6 +118,8 @@ def teacherView(request):
     # for key, value in attendaces.items():
     #     logger.info(" loop: {}: {}".format(key, value))
     my_attendance_dict = {}
+    counter =0
+    listofPercentage = []
     for attendace in list_attendanceList:
         logger.info(" attendance: {}:".format(attendace))
         logger.info(attendace['totalAttendanceUptoToday'])
@@ -130,11 +132,19 @@ def teacherView(request):
             currentPercent = currentValue / totalSchoolDaysForCurrentClass * 100
             totalPercent = (currentPercent + my_attendance_dict[currentKey] ) / 2
             totalAttendance = my_attendance_dict[currentKey] + currentValue
-            my_attendance_dict[currentKey] = totalPercent      
+            listofPercentage.append(currentPercent)
+            logger.info("length of listofpercentage is ")
+            logger.info(len(listofPercentage))
+            counter = counter + 1
+            averagePercentIs = sum(listofPercentage) / len(listofPercentage)
+            my_attendance_dict[currentKey] = averagePercentIs      
         else:
             logger.info("need to add the key")
+            
             currentPercent = currentValue / totalSchoolDaysForCurrentClass * 100
+            listofPercentage.append(currentPercent)
             my_attendance_dict[currentKey] = currentPercent
+
     logger.info("my updated attendance is below:")
     logger.info(my_attendance_dict)
 
