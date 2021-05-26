@@ -130,6 +130,23 @@ def studentAndCourseAddView(request):
     logger.info(student)
     logger.info("post request is ")
     logger.info(request.POST)
+    studentModel = Student.objects.filter(name=student)
+    courseModel = Course.objects.filter(name=course)
+    logger.info("studentmodel is ")
+    logger.info(studentModel)
+    logger.info("coursemodel is ")
+    logger.info(courseModel)
+    logger.info(courseModel)
+    # science id =2 , ram id = 6, current attendance =3
+    attendace = Attendance.objects.filter(course=2, student=6).first()
+    logger.info("attendance is ")
+    # logger.info(attendace)
+    attendace.totalAttendanceUptoToday = attendace.totalAttendanceUptoToday + 1
+    attendace.save()
+    # attendace
+#    attendaces = Attendance.objects.all
+# t.value = 999  # change field
+# t.save() # this will update only
 
     context= {'form': form, 'course': course, 'student':student,
               'submitbutton': submitbutton}

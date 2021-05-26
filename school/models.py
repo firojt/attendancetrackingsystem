@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class Student(models.Model):
     """Model representing a campus name"""
-    id = models.AutoField(primary_key='True', max_length=50)
+    id = models.IntegerField(primary_key='True', max_length=50)
     name = models.CharField(max_length=200, help_text='Enter a student name')
     dob = models.DateField(max_length=200, help_text='Enter a dob ')
     phone = models.CharField(max_length=200, help_text='Enter a student phone no')
@@ -32,7 +32,7 @@ class Teacher(models.Model):
 # class is course for us- class is a reserved keyword
 class Course(models.Model):
     
-    id = models.AutoField(primary_key='True', max_length=50)
+    id = models.IntegerField(primary_key='True', max_length=50)
     name = models.CharField(max_length=50)
     classStartDate = models.DateField(default='2021-05-18')
     classEndDate = models.DateField(default='2021-08-10')
@@ -57,4 +57,4 @@ class Attendance(models.Model):
     def __str__(self):
         sname = Student.objects.get(name=self.student)
         cname = Course.objects.get(name=self.course)
-        return '%s : %s' % (sname.name, cname.name)
+        return '%s : %s: %d' % (sname.name, cname.name, self.totalAttendanceUptoToday)
