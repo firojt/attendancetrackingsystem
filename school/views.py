@@ -106,6 +106,24 @@ def teacherView(request):
     courses = Course.objects.all
     attendaces = Attendance.objects.all
     teachers = Teacher.objects.all
+    # attendacesList = Attendance.objects.all().values_list(flat=True)
+    # attendacesList = Attendance.objects.filter(id!=0)
+    logger.info(type(Attendance.objects.all().values_list(flat=True) ))
+
+
+    attendanceList = Attendance.objects.values()             # return ValuesQuerySet object
+    list_attendanceList = [entry for entry in attendanceList]  # converts ValuesQuerySet into Python list
+
+    # for key, value in attendaces.items():
+    #     logger.info(" loop: {}: {}".format(key, value))
+
+    for attendace in list_attendanceList:
+        logger.info("attendance for class ")
+        logger.info(attendace)
+        logger.info("attendance is ")
+        logger.info(attendace)
+
+    
     return render(request, 'teacher.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'teachers':teachers})
 
 

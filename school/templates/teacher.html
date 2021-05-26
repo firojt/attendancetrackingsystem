@@ -9,7 +9,7 @@
     <div class="col-sm">
      <!-- here is what teacher table goes  -->
      <div class="container">
-      {{attendances | length}}
+      teachers length {{teachers | length}}
       <table class="table table-striped">
         <thead>
         <tr>
@@ -39,12 +39,14 @@
 
 
 <div class="container">
-{{attendances | length}}
+attendance length {{attendances | length}}
 <table class="table table-striped">
   <thead>
   <tr>
     <th scope="col">Course</th>
     <th scope="col">Credit</th> 
+    <th scope="col">Overall Attendance</th> 
+    <th scope="col">Action</th> 
   </tr>
 </thead>
 <tbody>
@@ -52,6 +54,22 @@
   {% for attendance in attendances %}
       <td>{{attendance.course}}</td>
       <td>{{attendance.course.credit}}</td>
+      <td>{{attendance.course.credit}}</td>
+      <td>
+        <form action="add/" method="POST" id="buttonForm">
+          {% csrf_token %}
+         <!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
+         <!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
+         <input type="hidden" name="student" value="{{attendace.student}}" />
+         <input type="hidden" name="course" value="{{attendace.course}}" />
+          
+          <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add">View Course Details
+
+          </button> 
+          
+         <!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
+       </form>
+      </td>
   </tr>
   {% endfor %}
 </tbody>
