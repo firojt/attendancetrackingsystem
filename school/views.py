@@ -122,7 +122,7 @@ def teacherView(request):
         logger.info(" attendance: {}:".format(attendace))
         logger.info(attendace['totalAttendanceUptoToday'])
         currentKey = (attendace['course_id'])
-        currentKey = Course.objects.get(pk=currentKey)
+        currentKey = Course.objects.get(pk=currentKey).name
         currentValue= (attendace['totalAttendanceUptoToday'])
         if currentKey in my_attendance_dict:
             logger.info("if key already exist we need to add")
