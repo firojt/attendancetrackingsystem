@@ -5,6 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, response
 import sys
 import logging
+from datetime import date
+from datetime import timedelta
 
 
 import logging
@@ -108,8 +110,9 @@ class UserForm(forms.Form):
 
 
 def studentAndCourseAddView(request):
-    logger.info("add attendance is called")
+    logger.info("add attendance is called and the comparable date is ")
    
+    logger.info(date.today() + timedelta(days=1))
 
     # form handling 
     submitbutton= request.POST.get("submit")

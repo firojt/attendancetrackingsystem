@@ -68,7 +68,8 @@
                     <!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
                     <input type="hidden" name="student" value="{{attendace.student}}" />
                     <input type="hidden" name="course" value="{{attendace.course}}" />
-                    {% if canIModifyAttendance %}
+                    canIModifyAttendance={{canIModifyAttendance}}
+                    {% if attendace.modified_date != today.date   %}
                     <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add - can be added-{{attendace.course}}-{{attendace.student}}</button> 
                      {% else %}
                      <button  class="btn btn-primary my-2 my-sm-0 my-add-button disabled"  type="submit" name="add" value="Add">Add can not be added-{{attendace.course}}-{{attendace.student}}</button> 

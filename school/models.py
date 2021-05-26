@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from django.urls import reverse
 from datetime import date
+from datetime import timedelta
 
 class Student(models.Model):
     """Model representing a campus name"""
@@ -66,4 +67,4 @@ class Attendance(models.Model):
 
     @property
     def canIModifyAttendance(self):
-        return date.today() == self.modified_date
+        return date.today() + timedelta(days=10) == self.modified_date
