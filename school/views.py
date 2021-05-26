@@ -108,7 +108,7 @@ def teacherView(request):
     teachers = Teacher.objects.all
     # attendacesList = Attendance.objects.all().values_list(flat=True)
     # attendacesList = Attendance.objects.filter(id!=0)
-    logger.info(type(Attendance.objects.all().values_list(flat=True) ))
+    # logger.info(type(Attendance.objects.all().values_list(flat=True) ))
 
 
     attendanceList = Attendance.objects.values()             # return ValuesQuerySet object
@@ -116,12 +116,25 @@ def teacherView(request):
 
     # for key, value in attendaces.items():
     #     logger.info(" loop: {}: {}".format(key, value))
-
+    my_attendance_dict = {}
     for attendace in list_attendanceList:
-        logger.info("attendance for class ")
-        logger.info(attendace)
-        logger.info("attendance is ")
-        logger.info(attendace)
+        logger.info(" attendance: {}:".format(attendace))
+        logger.info(attendace['totalAttendanceUptoToday'])
+        currentKey = str(attendace['course_id'])
+        currentValue= (attendace['totalAttendanceUptoToday'])
+        if currentKey in my_attendance_dict:
+            logger.info("if key already exist we need to add")
+            totalAttendance = my_attendance_dict[currentKey] + currentValue
+            my_attendance_dict[currentKey] = totalAttendance      
+        else:
+            logger.info("need to add the key")
+            my_attendance_dict[currentKey] = currentValue
+
+     # do sth
+        # logger.info("attendance for class ")
+        # logger.info(attendace)
+        # logger.info("attendance is ")
+        # logger.info(attendace)
 
     
     return render(request, 'teacher.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'teachers':teachers})
