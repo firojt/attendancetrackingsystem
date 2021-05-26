@@ -129,6 +129,8 @@ def teacherView(request):
         else:
             logger.info("need to add the key")
             my_attendance_dict[currentKey] = currentValue
+    logger.info("my updated attendance is below:")
+    logger.info(my_attendance_dict)
 
      # do sth
         # logger.info("attendance for class ")
