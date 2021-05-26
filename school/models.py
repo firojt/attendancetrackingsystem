@@ -53,6 +53,8 @@ class Attendance(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     isPresent = models.BooleanField(default='True')
+    created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
     
     def __str__(self):
         sname = Student.objects.get(name=self.student)
