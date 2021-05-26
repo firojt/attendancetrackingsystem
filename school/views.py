@@ -130,15 +130,15 @@ def studentAndCourseAddView(request):
     logger.info(student)
     logger.info("post request is ")
     logger.info(request.POST)
-    studentModel = Student.objects.filter(name=student)
-    courseModel = Course.objects.filter(name=course)
+    studentModel = Student.objects.filter(name=student).first()
+    courseModel = Course.objects.filter(name=course).first()
     logger.info("studentmodel is ")
     logger.info(studentModel)
     logger.info("coursemodel is ")
     logger.info(courseModel)
     logger.info(courseModel)
     # science id =2 , ram id = 6, current attendance =3
-    attendace = Attendance.objects.filter(course=2, student=6).first()
+    attendace = Attendance.objects.filter(course=courseModel.id, student=studentModel.id).first()
     logger.info("attendance is ")
     # logger.info(attendace)
     attendace.totalAttendanceUptoToday = attendace.totalAttendanceUptoToday + 1
