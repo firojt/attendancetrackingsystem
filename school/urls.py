@@ -16,13 +16,10 @@ urlpatterns = [
     url(r'login_success/$', views.login_success, name='login_success'),
     path('admin/', admin.site.urls),
     # path('home/', home),
-    path('courses/', views.CourseListView.as_view()),
-    path('school/', views.school),
-    
-    path('addAttendace/', views.school),
-    path('school2/', views.school_template),
-     path('logout/', views.logout),
     path('home/', views.home_template),
+
+    path('courses/', views.CourseListView.as_view()),
+    path('logout/', views.logout),
     path('student/', views.studentAndCourseView),
     path('student/add/', views.studentAndCourseAddView),
     path('teacher/course/view', views.viewCourse),

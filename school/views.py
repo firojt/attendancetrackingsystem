@@ -7,11 +7,11 @@ import sys
 import logging
 from datetime import date
 from datetime import timedelta
-
-
 import logging
-
 from django.http import HttpResponse
+from django.views import generic
+from django import forms
+from django.shortcuts import redirect
 
 logging.config.dictConfig({
     'version': 1,
@@ -47,40 +47,12 @@ logging.config.dictConfig({
 # This retrieves a Python logging instance (or creates it)
 logger = logging.getLogger(__name__)
 
-# Create your views here.
-def school(request):
-    return HttpResponse('school page')
-
-
-
-   
-
-def school_template(request):
-    context = {
-        "first_name" : "Firoj ",
-        "last_name"  : "Tml",
-    }
-    return render(request, 'school.html', context)
-
-
-def teacher_template(request):
-    return render(request, 'teacher.html')
-
+def logout(request):
+    return render(request, 'logout.html')
+    
 def home_template(request):
     return render(request, 'home.html')
 
-
-def student_template(request):
-    context = {
-        "attendace" : "stringval",
-    }
-    return render(request, 'student.html', context)
-
-def logout(request):
-    return render(request, 'logout.html')
-
-
-from django.views import generic
 
 class StudentListView(generic.ListView):
     model = Student
@@ -89,9 +61,6 @@ class StudentListView(generic.ListView):
     print(queryset)
     print("from 1 ")
     template_name = 'student.html'  # Specify your own template name/location
-
-def getTotalDays(course,startDate, endDate):
-    return 25
 
 # alterante student list view 
 def studentAndCourseView(request):
@@ -150,17 +119,7 @@ def teacherView(request):
     logger.info("my updated attendance is below:")
     logger.info(my_attendance_dict)
 
-     # do sth
-        # logger.info("attendance for class ")
-        # logger.info(attendace)
-        # logger.info("attendance is ")
-        # logger.info(attendace)
-
-    
     return render(request, 'teacher.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'teachers':teachers, 'my_attendance_dict':my_attendance_dict})
-
-
-from django import forms
 
 class UserForm(forms.Form):
     course= forms.CharField(max_length=100)
@@ -217,16 +176,10 @@ def studentAndCourseAddView(request):
     logger.info("coursemodel is ")
     logger.info(courseModel)
     logger.info(courseModel)
-    # science id =2 , ram id = 6, current attendance =3
     attendace = Attendance.objects.filter(course=courseModel.id, student=studentModel.id).first()
     logger.info("attendance is ")
-    # logger.info(attendace)
     attendace.totalAttendanceUptoToday = attendace.totalAttendanceUptoToday + 1
     attendace.save()
-    # attendace
-#    attendaces = Attendance.objects.all
-# t.value = 999  # change field
-# t.save() # this will update only
 
     context= {'form': form, 'course': course, 'student':student,
               'submitbutton': submitbutton}
@@ -236,28 +189,18 @@ def studentAndCourseAddView(request):
 
 class TeacherListView(generic.ListView):
     model = Teacher
-    context_object_name = 'teachers'   # your own name for the list as a template variable
+    context_object_name = 'teachers'   
     queryset = Teacher.objects.all
-    template_name = 'teacher.html'  # Specify your own template name/location
-
-
-
-# create separeate view for redirect 
-from django.shortcuts import redirect
+    template_name = 'teacher.html'  
 
 def login_success(request):
     if request.user.groups.filter(name = 'teacher').exists():
         # user is an admin
         return redirect('/teacher') 
     elif request.user.groups.filter(name = 'student').exists():
-        # user is an admin
-        # print("from 2")
-        # print >>sys.stderr, 'Goodbye, cruel world!'
         logger.info("from logger 1")
-        
         return redirect('/student') 
 
-# courses list view 
 class CourseListView(generic.ListView):
     model = Course
     context_object_name = 'courses'   # your own name for the list as a template variable
