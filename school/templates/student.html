@@ -1,10 +1,10 @@
 {% extends "base_template.html" %}
 <hr/>
 {% block content %}
+<br/>
 <div class = "container">
    {% if students %}
-   <ul>
-      <li>
+  
          <!-- display student details here -->
          <table class="table table-striped">
             <thead>
@@ -27,18 +27,18 @@
                {% endfor %}
             </tbody>
          </table>
-      </li>
-   </ul>
+
    {% else %}
    <p></p>
    {% endif %}
 </div>
 <!-- div for attendaces -->
+<br/><br/><br/>
+
 <div class = "container">
    <!-- <h1>Total Attendances =  {{attendaces | length}}</h1> -->
    {% if courses %}
-   <ul>
-      <li>
+  
          <!-- display student details here -->
          <table class="table table-striped">
             <thead>
@@ -68,17 +68,17 @@
                     <!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
                     <input type="hidden" name="student" value="{{attendace.student}}" />
                     <input type="hidden" name="course" value="{{attendace.course}}" />
-                    canIModifyAttendance={{canIModifyAttendance}}
+                    
                     {% now "Y-m-d" as todays_date %}
-                    todays_date='{{todays_date}}'
-                    atendace.modified_date='{{attendace.modified_date|date:"Y-m-d" }}'
+                    
+                    
 
                     {% if attendace.modified_date|date:"Y-m-d"  != todays_date   %}
-                    <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add">121212Add - can be added-{{attendace.course}}-{{attendace.student}}</button> 
+                    <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add">Add</button> 
                      {% else %}
-                     <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add" disabled>Add can not be added-{{attendace.course}}-{{attendace.student}}
+                     <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add" disabled>Add</button> 
 
-                     </button> 
+                     
                      {% endif %}
                     <!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
                   </form>
@@ -88,12 +88,12 @@
                {% endfor %}
             </tbody>
          </table>
-      </li>
-   </ul>
+
    {% else %}
    <p>There are no courses in the school.</p>
    {% endif %}
 </div>
+<br/>
 
 <!-- jquery function -->
 <!-- <script src="templates/logic.js"></script> -->
