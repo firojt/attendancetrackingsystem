@@ -3,13 +3,18 @@
 
 
 {% block content %}
- 
+ <br/>
 <div class = "container">
-<h1>Total Course =  {{courses | length}}</h1>
+  <div class="container">
+    <div class="page-header">
+      <h1>All Available Courses</h1>      
+    </div>
+   
+  </div>
 {% if courses %}
-<ul>
+
   
-    <li>
+    
      <!-- display student details here -->
      <table class="table table-striped">
         <thead>
@@ -39,9 +44,9 @@
          
         </tbody>
       </table>
-    </li>
+    
   
-</ul>
+
 {% else %}
   <p>There are no courses in the school.</p>
 {% endif %}

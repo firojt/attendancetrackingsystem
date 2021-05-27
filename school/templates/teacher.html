@@ -34,7 +34,7 @@
       
     </div>
     <div class="col-sm">
-      Logged in teacher is {{user.username}}
+      
     </div>
   </div>
 </div>
@@ -57,7 +57,7 @@
   {% for key, value in my_attendance_dict.items %}
   <tr>
     <td> {{key}}</td>
-    <td> {{value}}</td>
+    <td> {{value}} %</td>
       <td>
         <form action="course/view" method="POST" id="classButtonForm">
           {% csrf_token %}
