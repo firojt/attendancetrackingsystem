@@ -15,9 +15,7 @@ def contact(request):
 urlpatterns = [
     url(r'login_success/$', views.login_success, name='login_success'),
     path('admin/', admin.site.urls),
-    # path('home/', home),
     path('home/', views.home_template),
-
     path('courses/', views.CourseListView.as_view()),
     path('logout/', views.logout),
     path('student/', views.studentAndCourseView),
