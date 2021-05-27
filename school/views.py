@@ -173,12 +173,14 @@ def viewCourse(request):
     submitbutton= request.POST.get("submit")
     course=''
     form= UserForm(request.POST or None)
+    attendaces = Attendance.objects.all
+    courses = Course.objects.all
     if form.is_valid():
         course= form.cleaned_data.get("course")
         logger.info("form view course")
         logger.info(course)
     context= {'form': form, 'course': request.POST.get("viewCourse"),
-              'submitbutton': submitbutton}
+              'submitbutton': submitbutton, 'attendances': attendaces, 'courses':courses}
     
     return render(request, 'viewCourse.html', context)
 

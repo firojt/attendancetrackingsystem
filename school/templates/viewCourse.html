@@ -1,13 +1,44 @@
 {% extends "base_template.html" %}
 
 {% block content %}
-<div class="container d-flex justify-content-center">
-  <p>Attendace added successfully </p> <br/>
+<p>you clicked course {{ course }}. and you are  {{ student }}. </p>
+<div class = "container">
+  
+  <br/> <br/> <br/>
+       
+       <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Course</th>
+              <th scope="col">Student</th>
+              <th scope="col">Total Attendance Upto Today</th>
+              <th scope="col">Total Attendance Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              
+              {% for attendance in attendances %}
+              {% if attendance.course|stringformat:"s" == course|stringformat:"s" %}
+              <th scope="row">{{attendance.course}}</th>
+              <td>{{attendance.student}}</td>
+              <td>{{attendance.totalAttendanceUptoToday}}</td>
+              <td>{% widthratio attendance.totalAttendanceUptoToday attendance.course.totalClassDay 100 %} %</td>
+              
+            </tr>
+            {% endif %}
+            {% endfor %}
+           
+          </tbody>
+        </table>
+   
+    
 
-</div> <br/>
-  <p>you clicked course {{ course }}. and you are  {{ student }}. </p>
-
+  
   <a href="/teacher">    Click here to go to teachers page</a>
-</div>
+  </div>
+
+<!-- above here we are going to display attendance table -->
+
 <br/><br/><br/><br/>
 {% endblock %}
