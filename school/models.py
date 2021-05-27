@@ -7,9 +7,6 @@ class Student(models.Model):
     name = models.CharField(max_length=200, help_text='Enter a student name')
     dob = models.DateField(max_length=200, help_text='Enter a dob ')
     phone = models.CharField(max_length=200, help_text='Enter a student phone no')
-    # attendance = models.DecimalField(max_digits = 5, decimal_places = 2)
-    # attendance = models.CharField(max_length=200, help_text='Enter a student name')
-    # attendance2 = models.CharField(max_length=200, help_text='Enter a student name')
 
 # Metadata
     class Meta:

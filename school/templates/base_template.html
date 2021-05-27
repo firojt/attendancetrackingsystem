@@ -1,91 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+
 <body>
-
-
-<!-- navbar -->
-<div class="container">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li><a href='/home'><button class="btn btn-primary my-2 my-sm-0" type="submit">Application Tracking System</button></a></li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/courses">Courses</a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Contact</a>
-      </li>
-    </ul>
-
-    <a href='/logout'><button class="btn btn-warning my-2 my-sm-0" type="submit">Logout</button></a>
-
-  </div>
-</nav>
-</div>
-
-
-
-    {% block sidebar %}<!-- insert default navigation text for every page -->{% endblock %}
-    {% block content %}<!-- default content text (typically empty) -->{% endblock %}
-    
-      <img src="/static/attendance_img.png" alt="Attendance" class="rounded mx-auto d-block">
-<br/> <br/>
-      <!-- footer  -->
-      <div class="container">
-      <footer class="bg-light text-center text-lg-start ">
-        <!-- Grid container -->
-        <div class="container p-4 pb-0 ">
-          <form action="">
-            <!--Grid row-->
-            <div class="row">
-              <!--Grid column-->
-              <div class="col-auto mb-4 mb-md-0">
-                <p class="pt-2">
-                  <strong>Sign up for our newsletter</strong>
-                </p>
-              </div>
-              <!--Grid column-->
-      
-              <!--Grid column-->
-              <div class="col-md-5 col-12 mb-4 mb-md-0">
-                <!-- Email input -->
-                <div class="form-outline mb-4">
-                  <input type="email" id="form5Example2" class="form-control" />
-                  <label class="form-label" for="form5Example2">Email address</label>
-                </div>
-              </div>
-              <!--Grid column-->
-      
-              <!--Grid column-->
-              <div class="col-auto mb-4 mb-md-0">
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary mb-4">
-                  Subscribe
-                </button>
-              </div>
-              <!--Grid column-->
-            </div>
-            <!--Grid row-->
-          </form>
-        </div>
-        <!-- Grid container -->
-      
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © 2021 Copyright:
-          <a class="text-dark" href="/home">Attendance Tracking Application</a>
-        </div>
-        <!-- Copyright -->
-      </footer>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- navbar -->
+	<div class="container">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li>
+						<a href='/home'>
+							<button class="btn btn-primary my-2 my-sm-0" type="submit">Application Tracking System</button>
+						</a>
+					</li>
+					<li class="nav-item active"> <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a> </li>
+					<li class="nav-item"> <a class="nav-link" href="/courses">Courses</a> </li>
+					<li class="nav-item"> <a class="nav-link disabled" href="#">Contact</a> </li>
+				</ul>
+				<a href='/logout'>
+					<button class="btn btn-warning my-2 my-sm-0" type="submit">Logout</button>
+				</a>
+			</div>
+		</nav>
+	</div> {% block sidebar %}
+	<!-- insert default navigation text for every page -->{% endblock %} {% block content %}
+	<!-- default content text (typically empty) -->{% endblock %} <img src="/static/attendance_img.png" alt="Attendance" class="rounded mx-auto d-block">
+	<br/>
+	<br/>
+	<!-- footer  -->
+	<div class="container">
+		<footer class="bg-light text-center text-lg-start ">
+			<!-- Grid container -->
+			<div class="container p-4 pb-0 ">
+				<form action="">
+					<!--Grid row-->
+					<div class="row">
+						<!--Grid column-->
+						<div class="col-auto mb-4 mb-md-0">
+							<p class="pt-2"> <strong>Sign up for our newsletter</strong> </p>
+						</div>
+						<!--Grid column-->
+						<!--Grid column-->
+						<div class="col-md-5 col-12 mb-4 mb-md-0">
+							<!-- Email input -->
+							<div class="form-outline mb-4">
+								<input type="email" id="form5Example2" class="form-control" />
+								<label class="form-label" for="form5Example2">Email address</label>
+							</div>
+						</div>
+						<!--Grid column-->
+						<!--Grid column-->
+						<div class="col-auto mb-4 mb-md-0">
+							<!-- Submit button -->
+							<button type="submit" class="btn btn-primary mb-4"> Subscribe </button>
+						</div>
+						<!--Grid column-->
+					</div>
+					<!--Grid row-->
+				</form>
+			</div>
+			<!-- Grid container -->
+			<!-- Copyright -->
+			<div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);"> © 2021 Copyright: <a class="text-dark" href="/home">Attendance Tracking Application</a> </div>
+			<!-- Copyright -->
+		</footer>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
+
 </html>

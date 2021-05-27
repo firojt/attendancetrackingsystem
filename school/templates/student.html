@@ -1,120 +1,63 @@
 {% extends "base_template.html" %}
-<hr/>
-{% block content %}
+<hr/> {% block content %}
 <br/>
-<div class = "container">
-   {% if students %}
-  
-         <!-- display student details here -->
-         <table class="table table-striped">
-            <thead>
-               <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">DOB</th>
-                  <th scope="col">Phone Number</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr >
-                  <!-- {{ user.username }} -->
-                  {% for student in students %}
-                  {% if user.username == student.name %}
-                  <th scope="row">{{student.name}}</th>
-                  <td>{{student.dob}}</td>
-                  <td>{{student.phone}}</td>
-               </tr>
-               {% endif %}
-               {% endfor %}
-            </tbody>
-         </table>
-
-   {% else %}
-   <p></p>
-   {% endif %}
-</div>
+<div class="container"> {% if students %}
+	<!-- display student details here -->
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Name</th>
+				<th scope="col">DOB</th>
+				<th scope="col">Phone Number</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<!-- {{ user.username }} -->{% for student in students %} {% if user.username == student.name %}
+				<th scope="row">{{student.name}}</th>
+				<td>{{student.dob}}</td>
+				<td>{{student.phone}}</td>
+			</tr> {% endif %} {% endfor %} </tbody>
+	</table> {% else %}
+	<p></p> {% endif %} </div>
 <!-- div for attendaces -->
-<br/><br/><br/>
-
-<div class = "container">
-   <!-- <h1>Total Attendances =  {{attendaces | length}}</h1> -->
-   {% if courses %}
-  
-         <!-- display student details here -->
-         <table class="table table-striped">
-            <thead>
-               <tr>
-                  <th scope="col">Course Name</th>
-                  <th scope="col">Course Credit</th>
-                  <th scope="col">Total Attendance</th>
-                  <th scope="col">Current Attendance</th>
-                  <th scope="col">Add Today's Attendance</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr >
-                  {% for attendace in attendances %}
-                  <!-- user =  '{{user.username|stringformat:'s'}}'    
-                  student = '{{attendace.student|stringformat:'s'}}' <br/> -->
-                  {% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
-                  <th scope="row">{{attendace.course}}</th>
-                  <td>{{attendace.course.credit}}</td>
-                  <!-- <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td> -->
-                  <td>{% widthratio attendace.totalAttendanceUptoToday attendace.course.totalClassDay 100 %} %</td>
-                  <td></td>
-                  <td>
-                   <form action="add/" method="POST" id="buttonForm">
-                     {% csrf_token %}
-                    <!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
-                    <!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
-                    <input type="hidden" name="student" value="{{attendace.student}}" />
-                    <input type="hidden" name="course" value="{{attendace.course}}" />
-                    
-                    {% now "Y-m-d" as todays_date %}
-                    
-                    
-
-                    {% if attendace.modified_date|date:"Y-m-d"  != todays_date   %}
-                    <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add">Add</button> 
-                     {% else %}
-                     <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add" disabled>Add</button> 
-
-                     
-                     {% endif %}
-                    <!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
-                  </form>
-                  </td>
-               </tr>
-               {% endif %}
-               {% endfor %}
-            </tbody>
-         </table>
-
-   {% else %}
-   <p>There are no courses in the school.</p>
-   {% endif %}
-</div>
 <br/>
-
-<!-- jquery function -->
-<!-- <script src="templates/logic.js"></script> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-
-$(function() {
-  // if condition only call this if attendance for today is not done
-
-  $(".my-add-button").prop("disabled", false);
-});
-
-
-$( "#add" ).click(function() {
-    // alert( "add button clicked" );
-$("#add").attr("disabled", false);
-    console.log('add button clicked');
-  });
-// $("#add").attr("disabled", false);
-// $("#add").toggle();
-</script> 
-{% endblock %}
-
-COPY TO CLIPBOARD SELECT AL
+<br/>
+<br/>
+<div class="container">
+	<!-- <h1>Total Attendances =  {{attendaces | length}}</h1> -->{% if courses %}
+	<!-- display student details here -->
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Course Name</th>
+				<th scope="col">Course Credit</th>
+				<th scope="col">Total Attendance</th>
+				<th scope="col">Add Today's Attendance</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr> {% for attendace in attendances %}
+				<!-- user =  '{{user.username|stringformat:'s'}}'    
+                  student = '{{attendace.student|stringformat:'s'}}' <br/> -->{% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
+				<th scope="row">{{attendace.course}}</th>
+				<td>{{attendace.course.credit}}</td>
+				<!-- <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td> -->
+				<td>{% widthratio attendace.totalAttendanceUptoToday attendace.course.totalClassDay 100 %} %</td>
+				
+				<td>
+					<form action="add/" method="POST" id="buttonForm"> {% csrf_token %}
+						<!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
+						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
+						<input type="hidden" name="student" value="{{attendace.student}}" />
+						<input type="hidden" name="course" value="{{attendace.course}}" /> {% now "Y-m-d" as todays_date %} {% if attendace.modified_date|date:"Y-m-d" != todays_date %}
+						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add">Add</button> {% else %}
+						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>Add</button> {% endif %}
+						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
+					</form>
+				</td>
+			</tr> {% endif %} {% endfor %} </tbody>
+	</table> {% else %}
+	<p>There are no courses in the school.</p> {% endif %} </div>
+<br/>
+{% endblock %} 
