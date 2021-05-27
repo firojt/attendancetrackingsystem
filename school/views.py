@@ -167,9 +167,24 @@ class UserForm(forms.Form):
     student= forms.CharField(max_length=100)
     course11=forms.CharField
     
+def viewCourse(request):
+    logger.info("post request is ")
+    logger.info(request.POST)
+    submitbutton= request.POST.get("submit")
+    course=''
+    form= UserForm(request.POST or None)
+    if form.is_valid():
+        course= form.cleaned_data.get("course")
+        logger.info("form view course")
+        logger.info(course)
+    context= {'form': form, 'course': request.POST.get("viewCourse"),
+              'submitbutton': submitbutton}
+    
+    return render(request, 'viewCourse.html', context)
 
 
 def studentAndCourseAddView(request):
+    
     logger.info("add attendance is called and the comparable date is ")
    
     logger.info(date.today() + timedelta(days=1))

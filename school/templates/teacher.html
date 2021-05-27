@@ -59,14 +59,14 @@
     <td> {{key}}</td>
     <td> {{value}}</td>
       <td>
-        <form action="add/" method="POST" id="buttonForm">
+        <form action="course/view" method="POST" id="classButtonForm">
           {% csrf_token %}
          <!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
          <!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
-         <input type="hidden" name="student" value="{{attendace.student}}" />
-         <input type="hidden" name="course" value="{{attendace.course}}" />
+      
+         <input type="hidden" name="course" value="{{key}}" />
           
-          <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="add" value="Add">View Course Details
+          <button  class="btn btn-primary my-2 my-sm-0 "  type="submit" name="viewCourse" value="{{key}}">View Course Details
 
           </button> 
           
