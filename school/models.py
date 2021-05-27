@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.urls import reverse
+from datetime import date
 
 class Student(models.Model):
     """Model representing a campus name"""
@@ -60,3 +61,9 @@ class Attendance(models.Model):
         sname = Student.objects.get(name=self.student)
         cname = Course.objects.get(name=self.course)
         return '%s : %s: %d' % (sname.name, cname.name, self.totalAttendanceUptoToday)
+
+    from datetime import date
+
+    @property
+    def canIModifyAttendance(self):
+        return date.today() == self.modified_date
