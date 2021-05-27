@@ -9,19 +9,23 @@
     <div class="col-sm">
      <!-- here is what teacher table goes  -->
      <div class="container">
-      teachers length {{teachers | length}}
+      <!-- teachers length {{teachers | length}} -->
       <table class="table table-striped">
         <thead>
         <tr>
-          <th scope="col">Teachers</th>
+          <th scope="col">Teacher</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-        {% for teacher in teachers %}
-            <td>{{teacher.name}}</td>
-        </tr>
-        {% endfor %}
+        <tr >
+          <!-- {{ user.username }} -->
+          {% for teacher in teachers %}
+          {% if user.username|stringformat:"s" == teacher.name|stringformat:"s" %}
+          <th scope="row"><button class="btn btn-success"> Currently Logged In Teacher {{teacher.name}}</button></th>
+          
+       </tr>
+       {% endif %}
+       {% endfor %}
       </tbody>
       </table>
       </div>
@@ -30,7 +34,7 @@
       
     </div>
     <div class="col-sm">
-      
+      Logged in teacher is {{user.username}}
     </div>
   </div>
 </div>
@@ -39,22 +43,21 @@
 
 
 <div class="container">
-attendance length {{attendances | length}}
+<!-- attendance length {{attendances | length}} -->
 <table class="table table-striped">
   <thead>
   <tr>
+ 
     <th scope="col">Course</th>
-    <th scope="col">Credit</th> 
-    <th scope="col">Overall Attendance</th> 
+    <th scope="col">Average Percentage</th> 
     <th scope="col">Action</th> 
   </tr>
 </thead>
 <tbody>
+  {% for key, value in my_attendance_dict.items %}
   <tr>
-  {% for attendance in attendances %}
-      <td>{{attendance.course}}</td>
-      <td>{{attendance.course.credit}}</td>
-      <td>{{attendance.course.credit}}</td>
+    <td> {{key}}</td>
+    <td> {{value}}</td>
       <td>
         <form action="add/" method="POST" id="buttonForm">
           {% csrf_token %}
@@ -72,6 +75,7 @@ attendance length {{attendances | length}}
       </td>
   </tr>
   {% endfor %}
+  
 </tbody>
 </table>
 </div>

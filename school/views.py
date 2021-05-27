@@ -137,12 +137,14 @@ def teacherView(request):
             logger.info(len(listofPercentage))
             counter = counter + 1
             averagePercentIs = sum(listofPercentage) / len(listofPercentage)
+            averagePercentIs = round(averagePercentIs, 2)
             my_attendance_dict[currentKey] = averagePercentIs      
         else:
             logger.info("need to add the key")
             
             currentPercent = currentValue / totalSchoolDaysForCurrentClass * 100
             listofPercentage.append(currentPercent)
+            currentPercent = round(currentPercent, 2)
             my_attendance_dict[currentKey] = currentPercent
 
     logger.info("my updated attendance is below:")
@@ -155,7 +157,7 @@ def teacherView(request):
         # logger.info(attendace)
 
     
-    return render(request, 'teacher.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'teachers':teachers})
+    return render(request, 'teacher.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'teachers':teachers, 'my_attendance_dict':my_attendance_dict})
 
 
 from django import forms
