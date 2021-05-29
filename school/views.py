@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.views import generic
 from django import forms
 from django.shortcuts import redirect
+import datetime
 
 logging.config.dictConfig({
     'version': 1,
@@ -53,6 +54,48 @@ def logout(request):
 def home_template(request):
     return render(request, 'home.html')
 
+class AttendanceRecord:
+    courseName : str
+    studentName : str
+    attendanceDate : date
+    isPresent : bool
+
+def unitTestMy():
+    attendance1 = AttendanceRecord()
+    attendance1.courseName = 'course1'
+    attendance1.studentName = 'student1'
+    attendance1.attendanceDate = date.today()
+    attendance1.isPresent = True
+
+    logger.info("object created and x is " )
+    attrs = vars(attendance1)
+    logger.info(', '.join("%s: %s" % item for item in attrs.items()))
+    # logger.info(str(attendance1.attendanceDate))
+
+# 1st start date , 2nd is the end date and 3rd is default that excludes saturday=6 and sunday=7
+def workdays(d, end, excluded=(6, 7)):
+    days = []
+    while d.date() <= end.date():
+        if d.isoweekday() not in excluded:
+            days.append(d)
+        d += datetime.timedelta(days=1)
+    return days
+
+def getListofAttendanceRecord(attendances):
+    logger.info("getListofAttendanceRecord am called")
+
+def studentDetailedView(request):
+    unitTestMy() 
+    logger.info("************************************")
+    logger.info(workdays(datetime.datetime(2021, 5, 5),
+               datetime.datetime(2021, 5, 30)))
+    logger.info("************************************")
+    student = value=request.POST['student']
+    course = value=request.POST['course']
+    attendances = Attendance.objects.all
+    getListofAttendanceRecord(attendances)
+    context = {'student':student , 'course':course, 'attendances':attendances}
+    return render(request, 'viewDetailedAtendance.html', context)
 
 class StudentListView(generic.ListView):
     model = Student
@@ -118,12 +161,7 @@ def viewCourse(request):
     
     return render(request, 'viewCourse.html', context)
 
-def studentDetailedView(request):
-    student = value=request.POST['student']
-    course = value=request.POST['course']
-    attendances = Attendance.objects.all
-    context = {'student':student , 'course':course, 'attendances':attendances}
-    return render(request, 'viewDetailedAtendance.html', context)
+
 
 def studentAndCourseAddView(request):
     # form handling 
@@ -167,6 +205,8 @@ class CourseListView(generic.ListView):
     queryset = Course.objects.all
     template_name = 'courses.html'  # Specify your own template name/location
 
-    
+
+
+ 
 
 
