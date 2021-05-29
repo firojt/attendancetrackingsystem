@@ -75,25 +75,42 @@ def unitTestMy():
 # 1st start date , 2nd is the end date and 3rd is default that excludes saturday=6 and sunday=7
 def workdays(d, end, excluded=(6, 7)):
     days = []
-    while d.date() <= end.date():
+    while d <= end:
         if d.isoweekday() not in excluded:
             days.append(d)
         d += datetime.timedelta(days=1)
     return days
 
-def getListofAttendanceRecord(attendances):
+def getListofAttendanceRecord(course, student):
     logger.info("getListofAttendanceRecord am called")
+    # iterate and create list of attendance record
+    attendanceList = Attendance.objects.values()             
+    list_attendanceList = [entry for entry in attendanceList]  
+    logger.info("total attendance record in db are- ")
+    logger.info(len(list_attendanceList))
+    courseStartDate = Course.objects.filter(name=course).first().classStartDate
+    courseEndDate = Course.objects.filter(name=course).first().classEndDate
+    logger.info("course start date and end date are ")
+    logger.info(courseStartDate)
+    logger.info(courseEndDate)
+    logger.info(type(courseStartDate))
+    listOfSchoolDays = workdays(courseStartDate, courseEndDate)
+    logger.info("list of school days are ")
+    logger.info(listOfSchoolDays)
+    logger.info("total school days is ")
+    logger.info(len(listOfSchoolDays))
+
 
 def studentDetailedView(request):
     unitTestMy() 
     logger.info("************************************")
-    logger.info(workdays(datetime.datetime(2021, 5, 5),
-               datetime.datetime(2021, 5, 30)))
+    # logger.info(workdays(datetime.datetime(2021, 5, 5),
+            #    datetime.datetime(2021, 5, 30)))
     logger.info("************************************")
     student = value=request.POST['student']
     course = value=request.POST['course']
     attendances = Attendance.objects.all
-    getListofAttendanceRecord(attendances)
+    getListofAttendanceRecord(course,student)
     context = {'student':student , 'course':course, 'attendances':attendances}
     return render(request, 'viewDetailedAtendance.html', context)
 
