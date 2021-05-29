@@ -118,6 +118,12 @@ def viewCourse(request):
     
     return render(request, 'viewCourse.html', context)
 
+def studentDetailedView(request):
+    student = value=request.POST['student']
+    course = value=request.POST['course']
+    attendances = Attendance.objects.all
+    context = {'student':student , 'course':course, 'attendances':attendances}
+    return render(request, 'viewDetailedAtendance.html', context)
 
 def studentAndCourseAddView(request):
     # form handling 
