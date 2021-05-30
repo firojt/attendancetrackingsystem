@@ -297,30 +297,55 @@ def getAllStudentsForThisCourse(course):
     unique_listOfStudentsForThisCourse = list(set(listOfStudentsForThisCourse))
     return unique_listOfStudentsForThisCourse
 
+def getListofStudentsforCourses(courses):
+    allCoursesAndStudentsEnrolled = {}
+    for eachCourse in courses:
+        logger.info("each course is {0}". format(eachCourse))
+        allStudentsForThisCourse = getAllStudentsForThisCourse(eachCourse)
+        eachCourseName = eachCourse['name']
+        allCoursesAndStudentsEnrolled[eachCourseName] = allStudentsForThisCourse
+    return allCoursesAndStudentsEnrolled
+
+def getTotalAttendanceofStudentForCourse(courseid, studentid):
+    attendances = Attendance.objects.filter(course=courseid , student = studentid).values()
+    uptoTodayTotalSchoolDays = getUptoTodayTotalSchoolDays(Course.objects.get(id=courseid).name)
+    totalAttendancePercent = len(attendances)/uptoTodayTotalSchoolDays * 100
+    return totalAttendancePercent
+
+
+def getTotalAttendancePercentForStudentsForCourse(listofStudentsforCourses):
+    courseAndAggregatePercent = {}
+    for each in listofStudentsforCourses:
+        logger.info("line 316-> each is class =  {0} and students are {1}".format(each, listofStudentsforCourses[each]))
+        allStudentPercentage = []
+        for eachStudent in listofStudentsforCourses[each]:
+            totalAttendanceofStudentForCourse = getTotalAttendanceofStudentForCourse(Course.objects.get(name=each).id, eachStudent)
+            allStudentPercentage.append(totalAttendanceofStudentForCourse)
+        aggregatePercentageForEachCourse = sum(allStudentPercentage) / len(allStudentPercentage)
+        courseAndAggregatePercent[each] = aggregatePercentageForEachCourse
+    return courseAndAggregatePercent
+
+
+
 
 @login_required(login_url='/accounts/login/')
 def teacherPageView(request):
+    
      # find assigned courses 
     teacherName = request.user.username
     teacherId = Teacher.objects.get(name=teacherName).id
     assignedCourses = Course.objects.filter(teacher=teacherId).values()
     logger.info("assignedCourses size is = {0} and type is {1}".format(len(assignedCourses), type(assignedCourses)))
-    # for each course find find list of all students enrolled 
-    allCoursesAndStudentsEnrolled = {}
-    for eachCourse in assignedCourses:
-        logger.info("each course is {0}". format(eachCourse))
-        allStudentsForThisCourse = getAllStudentsForThisCourse(eachCourse)
-        eachCourseName = eachCourse['name']
-        allCoursesAndStudentsEnrolled[eachCourseName] = allStudentsForThisCourse
-    logger.info("list of class and enrolled students are {0} for teacher {1}".format(allCoursesAndStudentsEnrolled, teacherName))
-        # allAttendancesForThisCourse = Attendance.objects.filter(course=eachCourse.id).values()
-        # for each in allAttendancesForThisCourse:
 
-            
-        
-        
-    # for each student find total attendance    
-       # totalAttendanceForaStudent = Attendance.objects.get(len(Attendance=Course.id)) - my logic
+    # for each course find the list of all students enrolled 
+    listofStudentsforCourses = getListofStudentsforCourses(assignedCourses)
+    logger.info("line 331-> list of class and enrolled students are {0} for teacher {1}".format(listofStudentsforCourses, teacherName))
+
+    # for each student find total attendance
+    courseAndAggregatePercent = getTotalAttendancePercentForStudentsForCourse(listofStudentsforCourses)
+    logger.info("courseAndAggregatePercent= {0}".format(courseAndAggregatePercent))
+       
+    # totalAttendanceForaStudent = Attendance.objects.get(len(Attendance=Course.id)) - my logic
    
     # for each student find total attendance percentage 
     # find aggregate percentage
