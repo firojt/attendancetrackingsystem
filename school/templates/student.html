@@ -23,8 +23,12 @@
 				<td>{{eachClass.courseStartDate}}</td>
 				<td>{{eachClass.courseEndDate}}</td>
 				<td>{{eachClass.courseCredit}}</td>
-				<td>{{eachClass.totalAttendaceDays}} / {{eachClass.totalSchoolDays}}</td>
-				<td>{{eachClass.totalAttendaceDays}} / {{eachClass.uptoTodaySchoolDays}}</td>
+				<td>{{eachClass.totalAttendaceDays}} / {{eachClass.totalSchoolDays}}
+					({% widthratio eachClass.totalAttendaceDays eachClass.totalSchoolDays 100 %}%)
+				</td>
+				<td>{{eachClass.totalAttendaceDays}} / {{eachClass.uptoTodaySchoolDays}}
+					({% widthratio eachClass.totalAttendaceDays eachClass.uptoTodaySchoolDays 100 %}%)
+				</td>
 			</tr> {% endfor %} </tbody>
 	</table> {% else %}
 	<p></p> {% endif %} </div>
