@@ -156,7 +156,7 @@ class StudetClass:
     courseStartDate : str
     courseEndDate : str
     courseCredit : int
-    totalAttendacePercent : float
+    totalAttendaceDays : float
     uptoTodayAttendancePercent: float
     totalSchoolDays: int
     uptoTodaySchoolDays : int
@@ -192,6 +192,20 @@ def getTotalAttendaceForClass(forClass,forStudent):
 def getUptoTodayAttendancePercent(forClass,forStudent):
     return 6
 
+def getTotalSchoolDays(className):
+    classStartDate = Course.objects.get(name=className).classStartDate
+    classEndDate = Course.objects.get(name=className).classEndDate
+    list_totalSchoolDays = workdays(classStartDate, classEndDate) 
+    return len(list_totalSchoolDays)
+
+def getUptoTodayTotalSchoolDays(className):
+    classStartDate = Course.objects.get(name=className).classStartDate
+    list_totalSchoolDaysUptoToday = workdays(classStartDate, date.today()) 
+    return len(list_totalSchoolDaysUptoToday)
+    
+  
+    
+
 def getListofClassForStudent(student):
     # return list of StudetClass
     listofClassForStudent = []
@@ -201,16 +215,21 @@ def getListofClassForStudent(student):
         studetClass = StudetClass()
         totalAttendaceForClass = getTotalAttendaceForClass(eachUniqueClass,student)
         uptoTodayAttendancePercent = getUptoTodayAttendancePercent(eachUniqueClass,student)
+
+        totalSchoolDays = getTotalSchoolDays(eachUniqueClass)
+        uptoTodaySchoolDays = getUptoTodayTotalSchoolDays(eachUniqueClass)
         course = Course.objects.get(name=eachUniqueClass)
+
         studetClass.courseName = course.name
         studetClass.courseStartDate = course.classStartDate
         studetClass.courseEndDate = course.classEndDate
         studetClass.courseCredit = course.credit
-        studetClass.totalAttendacePercent = totalAttendaceForClass
+        studetClass.totalAttendaceDays = totalAttendaceForClass
         studetClass.uptoTodayAttendancePercent = uptoTodayAttendancePercent
-        studetClass.totalSchoolDays= 33
-        studetClass.uptoTodaySchoolDays = 12
+        studetClass.totalSchoolDays= totalSchoolDays
+        studetClass.uptoTodaySchoolDays = uptoTodaySchoolDays
         listofClassForStudent.append(studetClass)
+
     return listofClassForStudent
 
 
