@@ -322,7 +322,7 @@ def getTotalAttendancePercentForStudentsForCourse(listofStudentsforCourses):
             totalAttendanceofStudentForCourse = getTotalAttendanceofStudentForCourse(Course.objects.get(name=each).id, eachStudent)
             allStudentPercentage.append(totalAttendanceofStudentForCourse)
         aggregatePercentageForEachCourse = sum(allStudentPercentage) / len(allStudentPercentage)
-        courseAndAggregatePercent[each] = aggregatePercentageForEachCourse
+        courseAndAggregatePercent[each] = round(aggregatePercentageForEachCourse,2)
     return courseAndAggregatePercent
 
 
@@ -341,16 +341,16 @@ def teacherPageView(request):
     listofStudentsforCourses = getListofStudentsforCourses(assignedCourses)
     logger.info("line 331-> list of class and enrolled students are {0} for teacher {1}".format(listofStudentsforCourses, teacherName))
 
-    # for each student find total attendance
+    # for each course find total percentage
     courseAndAggregatePercent = getTotalAttendancePercentForStudentsForCourse(listofStudentsforCourses)
     logger.info("courseAndAggregatePercent= {0}".format(courseAndAggregatePercent))
-       
+
     # totalAttendanceForaStudent = Attendance.objects.get(len(Attendance=Course.id)) - my logic
    
     # for each student find total attendance percentage 
     # find aggregate percentage
 
-    context= {'teacherName':teacherName}
+    context= {'teacherName':teacherName, 'courseAndAggregatePercent': courseAndAggregatePercent}
     logger.info("teacherName is {0}".format(teacherName))
     return render(request, 'teacherPage.html', context)
 

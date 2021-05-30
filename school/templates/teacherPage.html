@@ -1,7 +1,54 @@
 {% extends "base_template.html" %} {% block content %}
 <!-- grid system -->
 <div class="container">
-	teacherPage.html - teacher = {{teacherName}}
-
+	<div class="row">
+		<div class="col-sm">
+			<!-- here is what teacher table goes  -->
+			<div class="container">
+				<!-- teachers length {{teachers | length}} -->
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col">Teacher</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<!-- {{ user.username }} -->{% for teacher in teachers %} {% if user.username|stringformat:"s" == teacher.name|stringformat:"s" %}
+							<th scope="row">
+								<button class="btn btn-success"> Currently Logged In Teacher {{teacher.name}}</button>
+							</th>
+						</tr> {% endif %} {% endfor %} </tbody>
+				</table>
+			</div>
+		</div>
+		<div class="col-sm"> </div>
+		<div class="col-sm"> </div>
+	</div>
 </div>
-{% endblock %}
+<div class="container">
+	<!-- attendance length {{attendances | length}} -->
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th scope="col">Course</th>
+				<th scope="col">Average Percentage</th>
+				<th scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody> {% for key, value in courseAndAggregatePercent.items %}
+			<tr>
+				<td> {{key}}</td>
+				<td> {{value}} %</td>
+				<td>
+					<form action="course/view" method="POST" id="classButtonForm"> {% csrf_token %}
+						<!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
+						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
+						<input type="hidden" name="course" value="{{key}}" />
+						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="viewCourse" value="{{key}}">View Course Details </button>
+						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
+					</form>
+				</td>
+			</tr> {% endfor %} </tbody>
+	</table>
+</div> {% endblock %}
