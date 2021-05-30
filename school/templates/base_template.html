@@ -1,3 +1,5 @@
+{% load auth_extras %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,6 +20,18 @@
 						</a>
 					</li>
 					<li class="nav-item active"> <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a> </li>
+					{%  if  user.is_authenticated  %}
+					<!-- authenticated user2 is '{{user.groups.all.0}}' -->
+						{% if request.user|has_group:"student" %}
+						<!-- studentdashboard should show  -->
+						<li class="nav-item"> <a class="nav-link" href="/student">Student Dashboard</a> </li>
+						{% endif %}
+						{% if request.user|has_group:"teacher" %} 
+						<!-- teacherdashboard should show  -->
+						<li class="nav-item"> <a class="nav-link" href="/teacher">Teacher Dashboard</a> </li>
+						{% endif %}
+					{% endif %}
+
 					<li class="nav-item"> <a class="nav-link" href="/courses">Courses</a> </li>
 					<li class="nav-item"> <a class="nav-link disabled" href="#">Contact</a> </li>
 				</ul>
