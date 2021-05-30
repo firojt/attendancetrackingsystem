@@ -1,23 +1,31 @@
 {% extends "base_template.html" %}
 <hr/> {% block content %}
 <br/>
-<div class="container"> {% if students %}
+<div class="container"> 
+	<h3>length of listofStudentClass =  {{listofStudentClass | length}}</h3>
+	{% if listofStudentClass %}
 	<!-- display student details here -->
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th scope="col">Name</th>
-				<th scope="col">DOB</th>
-				<th scope="col">Phone Number</th>
+				<th scope="col">courseName</th>
+				<th scope="col">courseStartDate</th>
+				<th scope="col">courseEndDate</th>
+				<th scope="col">courseCredit</th>
+				<th scope="col">totalAttendacePercent</th>
+				<th scope="col">uptoTodayAttendancePercent</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<!-- {{ user.username }} -->{% for student in students %} {% if user.username == student.name %}
-				<th scope="row">{{student.name}}</th>
-				<td>{{student.dob}}</td>
-				<td>{{student.phone}}</td>
-			</tr> {% endif %} {% endfor %} </tbody>
+				<!-- {{ user.username }} -->{% for eachClass in listofStudentClass %} 
+				<th scope="row">{{eachClass.courseName}}</th>
+				<td>{{eachClass.courseStartDate}}</td>
+				<td>{{eachClass.courseEndDate}}</td>
+				<td>{{eachClass.courseCredit}}</td>
+				<td>{{eachClass.totalAttendacePercent}}</td>
+				<td>{{eachClass.uptoTodayAttendancePercent}}</td>
+			</tr> {% endfor %} </tbody>
 	</table> {% else %}
 	<p></p> {% endif %} </div>
 <!-- div for attendaces -->

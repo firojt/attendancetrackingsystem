@@ -112,7 +112,7 @@ def getListofAttendanceRecord(course, student):
     logger.info(courseStartDate)
     logger.info(courseEndDate)
     logger.info(type(courseStartDate))
-    listOfSchoolDays = workdays(courseStartDate, date.today()) # probably need to change to business days
+    listOfSchoolDays = workdays(courseStartDate, date.today()) 
     logger.info("list of school days are ")
     logger.info(listOfSchoolDays)
     logger.info("total school days is ")
@@ -151,12 +151,85 @@ class StudentListView(generic.ListView):
     print("from 1 ")
     template_name = 'student.html'  # Specify your own template name/location
 
+class StudetClass:
+    courseName: str
+    courseStartDate : str
+    courseEndDate : str
+    courseCredit : int
+    totalAttendacePercent : float
+    uptoTodayAttendancePercent: float
+
+
+def getTotalAttendanceForClass(courseNameInList):
+    return 5
+
+def getUniqueListofAttendedClassForStudent(student):
+    listofClass = []
+    student_id = Student.objects.get(name=student).id
+    allAttendancesForThisStudent = Attendance.objects.filter(student=student_id).values()
+    list_allAttendancesForThisStudent = [entry for entry in allAttendancesForThisStudent]  
+    for attendanceForThisStudent in list_allAttendancesForThisStudent:
+        courseKey = (attendanceForThisStudent['course_id'])
+        courseName = Course.objects.get(pk=courseKey).name
+        listofClass.append(courseName)
+    setFromList = set(listofClass)
+    listFromSet = list(setFromList)
+    return listFromSet
+
+def getTotalAttendaceForClass(forClass,forStudent):
+    return 5
+
+def getUptoTodayAttendancePercent(forClass,forStudent):
+    return 6
+
+def getListofClassForStudent(student):
+    # return list of StudetClass
+    listofClassForStudent = []
+    uniqueListofAttendedClassForStudent = getUniqueListofAttendedClassForStudent(student)
+    # for each unique class for student find totalAttendanceDays
+    for eachUniqueClass in uniqueListofAttendedClassForStudent:
+        studetClass = StudetClass()
+        totalAttendaceForClass = getTotalAttendaceForClass(eachUniqueClass,student)
+        uptoTodayAttendancePercent = getUptoTodayAttendancePercent(eachUniqueClass,student)
+        course = Course.objects.get(name=eachUniqueClass)
+        studetClass.courseName = course.name
+        studetClass.courseStartDate = course.classStartDate
+        studetClass.courseEndDate = course.classEndDate
+        studetClass.courseCredit = course.credit
+        studetClass.totalAttendacePercent = totalAttendaceForClass
+        studetClass.uptoTodayAttendancePercent = uptoTodayAttendancePercent
+        listofClassForStudent.append(studetClass)
+    return listofClassForStudent
+
+
+    
+
+    # attendanceList = Attendance.objects.values()             
+    # list_attendanceList = [entry for entry in attendanceList]  
+    # totalSchoolDays = 12
+
+
+    # for attendance in list_attendanceList:
+    #     studentNameInList = Student.objects.get(pk=attendance['student_id']).name
+    #     if(studentNameInList == student):
+            
+    #         courseNameInList = Course.objects.get(pk=attendance['course_id']).name
+    #         totalAttendanceForClass  = getTotalAttendanceForClass(courseNameInList)
+    #         courseStartDate = Course.objects.filter(name=courseNameInList).first().classStartDate
+    #         courseEndDate = Course.objects.filter(name=courseNameInList).first().classEndDate
+    #         totalSchoolDays = len(workdays(courseStartDate, courseEndDate))
+
+        
+
+
 # alterante student list view 
 def studentAndCourseView(request):
     students = Student.objects.all
     courses = Course.objects.all
     attendaces = Attendance.objects.all
-    return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces})
+    student = request.user.username
+    listofStudentClass = getListofClassForStudent(student)
+    return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass})
 
 # alterante student list view 
 def teacherView(request):
