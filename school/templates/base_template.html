@@ -36,7 +36,7 @@
 					<li class="nav-item"> <a class="nav-link disabled" href="#">Contact</a> </li>
 				</ul>
 				{% if user.is_authenticated %}
-					<a href="{% url 'logout' %}"><button class="btn btn-warning my-2 my-sm-0" type="submit">Logout</button></a>
+					<a href="{% url 'logout' %}"><button class="btn btn-warning my-2 my-sm-0" type="submit">Logout as {{user.username}}</button></a>
 					
 				</a>
 				{% endif %}
