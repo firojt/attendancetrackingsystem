@@ -49,8 +49,8 @@ logging.config.dictConfig({
 # This retrieves a Python logging instance (or creates it)
 logger = logging.getLogger(__name__)
 
-def logout(request):
-    return render(request, 'logout.html')
+def signout(request):
+    return render(request, 'registration/signout.html')
     
 def home_template(request):
     return render(request, 'home.html')
