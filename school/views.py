@@ -13,6 +13,7 @@ from django.views import generic
 from django import forms
 from django.shortcuts import redirect
 import datetime
+from django.contrib.auth.decorators import login_required
 
 
 logging.config.dictConfig({
@@ -49,6 +50,7 @@ logging.config.dictConfig({
 # This retrieves a Python logging instance (or creates it)
 logger = logging.getLogger(__name__)
 
+@login_required(login_url='/accounts/login/')
 def signout(request):
     return render(request, 'registration/signout.html')
     
@@ -127,7 +129,8 @@ def getListofAttendanceRecord(course, student):
         everyDayAttendance.isPresent = isPresentOnthisDay
         listofAttendanceRecord.append(everyDayAttendance)
     return listofAttendanceRecord
-        
+
+@login_required(login_url='/accounts/login/')    
 def studentDetailedView(request):
     # unitTestMy() 
     logger.info("************************************")
@@ -143,6 +146,7 @@ def studentDetailedView(request):
     logger.info([each.attendanceDate for each in listofAttendanceRecord])
     return render(request, 'viewDetailedAtendance.html', context)
 
+@login_required(login_url='/accounts/login/')
 class StudentListView(generic.ListView):
     model = Student
     context_object_name = 'students'   # your own name for the list as a template variable
@@ -266,6 +270,7 @@ def getListofClassForStudent(student):
 
 
 # alterante student list view 
+@login_required(login_url='/accounts/login/')
 def studentAndCourseView(request):
     students = Student.objects.all
     courses = Course.objects.all
@@ -283,6 +288,7 @@ def studentAndCourseView(request):
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass, 'isSchoolDayToday':isSchoolDayToday})
 
 # alterante student list view 
+@login_required(login_url='/accounts/login/')
 def teacherView(request):
     students = Student.objects.all
     courses = Course.objects.all
@@ -335,6 +341,7 @@ def viewCourse(request):
 def retrieveIfTodaysAttendanceNotAlreadyAdded(course, student):
     return True
 
+@login_required(login_url='/accounts/login/')
 def studentAndCourseAddView(request):
     # form handling 
     submitbutton= request.POST.get("submit")
@@ -378,13 +385,14 @@ def studentAndCourseAddView(request):
     
     return render(request, 'attendanceAdded.html', context)
 
-
+@login_required(login_url='/accounts/login/')
 class TeacherListView(generic.ListView):
     model = Teacher
     context_object_name = 'teachers'   
     queryset = Teacher.objects.all
     template_name = 'teacher.html'  
 
+@login_required(login_url='/accounts/login/')
 def login_success(request):
     if request.user.groups.filter(name = 'teacher').exists():
         return redirect('/teacher') 
