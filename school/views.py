@@ -177,7 +177,15 @@ def getUniqueListofAttendedClassForStudent(student):
     return listFromSet
 
 def getTotalAttendaceForClass(forClass,forStudent):
-    return 5
+    student_id = Student.objects.get(name=forStudent).id
+    course_id = Course.objects.get(name=forClass).id
+    attendancesForParticularClassAndStudent = Attendance.objects.filter(student=student_id, course=course_id).values()
+    list_attendancesForParticularClassAndStudent = [entry for entry in attendancesForParticularClassAndStudent] 
+    totalAttendences = 0
+    for each in attendancesForParticularClassAndStudent:
+        if(each['isPresent']):
+            totalAttendences += 1
+    return totalAttendences
 
 def getUptoTodayAttendancePercent(forClass,forStudent):
     return 6
