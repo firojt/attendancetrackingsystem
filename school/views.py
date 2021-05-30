@@ -260,7 +260,8 @@ def studentAndCourseView(request):
     attendaces = Attendance.objects.all
     student = request.user.username
     listofStudentClass = getListofClassForStudent(student)
-    return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass})
+    isSchoolDayToday = True
+    return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass, 'isSchoolDayToday':isSchoolDayToday})
 
 # alterante student list view 
 def teacherView(request):
@@ -324,6 +325,10 @@ def studentAndCourseAddView(request):
     if form.is_valid():
         course= form.cleaned_data.get("course")
         student= form.cleaned_data.get("student")
+
+    student =request.POST['student']
+    course =request.POST['course']
+    logger.info("attendance to add for student '{0}' and course '{1}' for date '{2}'".format(student,course, date.today()))
 
     studentModel = Student.objects.filter(name=student).first()
     courseModel = Course.objects.filter(name=course).first()
