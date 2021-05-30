@@ -278,7 +278,7 @@ def studentAndCourseView(request):
     if weekno < 5:
         isSchoolDayToday = True  
     else:
-        isSchoolDayToday = True #todo need to change back to False later 
+        isSchoolDayToday = True #todo need to change back to False later - frontend validation
         logger.info("week no is {0} and isSchoolday is {1}".format(weekno, isSchoolDayToday))
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass, 'isSchoolDayToday':isSchoolDayToday})
 
@@ -349,12 +349,14 @@ def studentAndCourseAddView(request):
 
     student =request.POST['student']
     course =request.POST['course']
+    isTodaysAttendanceDone = request.POST['istodaysattendanceDoneis']
+
     courseInstance = Course.objects.get(name=course)
     studentInstance = Student.objects.get(name=student)
-    logger.info("attendance to add for student '{0}' and course '{1}' for date '{2}'".format(student,course, date.today()))
+    logger.info("attendance to add for student '{0}' and course '{1}' for date '{2}' and isTodaysAttendanceDone is {3}".format(student,course, date.today(), isTodaysAttendanceDone))
     weekno = datetime.datetime.today().weekday()
     todaysAttendanceNotAlreadyAdded = retrieveIfTodaysAttendanceNotAlreadyAdded(course, student)
-    if (weekno < 7 and todaysAttendanceNotAlreadyAdded): #todo need to change to 5 later 
+    if (weekno < 7 and isTodaysAttendanceDone == 'False'): #todo need to change to 5 later  - backend validation
         # then add attendance to the db
         attendance = Attendance()
         attendance.totalAttendanceUptoToday = 12
@@ -362,6 +364,7 @@ def studentAndCourseAddView(request):
         attendance.student = studentInstance
         attendance.isPresent = True
         attendance.forDate = date.today()
+        logger.info("trying to add attendance to the db")
         attendance.save()
 
     studentModel = Student.objects.filter(name=student).first()

@@ -37,12 +37,14 @@
 						<!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
 						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->	
 						<input type="hidden" name="student" value="{{user.username}}" />
+						<input type="hidden" name="istodaysattendanceDoneis" value="{{eachClass.isTodaysAttendanceDone}}" />
 						<input type="hidden" name="course" value="{{eachClass.courseName}}" /> {% now "Y-m-d" as todays_date %} 
+						istodaysattendanceDoneis={{eachClass.isTodaysAttendanceDone}}
 						{% if isSchoolDayToday == False%}
 						<button class="btn btn-warning my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>off today</button> 
-						{% elif attendace.modified_date|date:"Y-m-d" != todays_date %} istodaysattendanceDoneis={{eachClass.isTodaysAttendanceDone}}
-						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add">Add todays attendance</button> {% else %}
-						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>Already Add</button> {% endif %}
+						{% elif  eachClass.isTodaysAttendanceDone %} 
+						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" id="alreadyAdded" value="Add" disabled>Already Added</button> {% else %}
+						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add" > Add</button> {% endif %}
 						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
 					</form>
 				</td>
