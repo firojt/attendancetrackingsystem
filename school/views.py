@@ -158,6 +158,8 @@ class StudetClass:
     courseCredit : int
     totalAttendacePercent : float
     uptoTodayAttendancePercent: float
+    totalSchoolDays: int
+    uptoTodaySchoolDays : int
 
 
 def getTotalAttendanceForClass(courseNameInList):
@@ -206,6 +208,8 @@ def getListofClassForStudent(student):
         studetClass.courseCredit = course.credit
         studetClass.totalAttendacePercent = totalAttendaceForClass
         studetClass.uptoTodayAttendancePercent = uptoTodayAttendancePercent
+        studetClass.totalSchoolDays= 33
+        studetClass.uptoTodaySchoolDays = 12
         listofClassForStudent.append(studetClass)
     return listofClassForStudent
 
