@@ -14,6 +14,7 @@ from django import forms
 from django.shortcuts import redirect
 import datetime
 
+
 logging.config.dictConfig({
     'version': 1,
     'disable_existing_loggers': False,
@@ -60,6 +61,8 @@ class AttendanceRecord:
     attendanceDate : date
     isPresent : bool
 
+    
+
 def unitTestMy():
     attendance1 = AttendanceRecord()
     attendance1.courseName = 'course1'
@@ -81,7 +84,11 @@ def workdays(d, end, excluded=(6, 7)):
         d += datetime.timedelta(days=1)
     return days
 
+def wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList):
+    return True
+
 def getListofAttendanceRecord(course, student):
+    listofAttendanceRecord = []
     logger.info("getListofAttendanceRecord am called")
     # iterate and create list of attendance record
     attendanceList = Attendance.objects.values()             
@@ -94,13 +101,22 @@ def getListofAttendanceRecord(course, student):
     logger.info(courseStartDate)
     logger.info(courseEndDate)
     logger.info(type(courseStartDate))
-    listOfSchoolDays = workdays(courseStartDate, courseEndDate)
+    listOfSchoolDays = workdays(courseStartDate, courseEndDate) # probably need to change to business days
     logger.info("list of school days are ")
     logger.info(listOfSchoolDays)
     logger.info("total school days is ")
     logger.info(len(listOfSchoolDays))
-
-
+    for schoolDay in listOfSchoolDays:
+        everyDayAttendance = AttendanceRecord()
+        logger.info("date = %s" % schoolDay)
+        isPresentOnthisDay = wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList)
+        everyDayAttendance.courseName = course
+        everyDayAttendance.studentName = student
+        everyDayAttendance.attendanceDate = schoolDay
+        everyDayAttendance.isPresent = isPresentOnthisDay
+        listofAttendanceRecord.append(everyDayAttendance)
+    return listofAttendanceRecord
+        
 def studentDetailedView(request):
     unitTestMy() 
     logger.info("************************************")
@@ -110,8 +126,10 @@ def studentDetailedView(request):
     student = value=request.POST['student']
     course = value=request.POST['course']
     attendances = Attendance.objects.all
-    getListofAttendanceRecord(course,student)
-    context = {'student':student , 'course':course, 'attendances':attendances}
+    listofAttendanceRecord = getListofAttendanceRecord(course,student)
+    context = {'student':student , 'course':course, 'attendances':attendances, 'listofAttendanceRecord':listofAttendanceRecord}
+    logger.info("before passing to render")
+    logger.info([each.attendanceDate for each in listofAttendanceRecord])
     return render(request, 'viewDetailedAtendance.html', context)
 
 class StudentListView(generic.ListView):

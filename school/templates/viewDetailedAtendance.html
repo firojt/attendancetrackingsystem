@@ -4,27 +4,27 @@
 Detailed Attendance for student {{student}} and course {{course}}
     <!-- div for attendance based on present and absent days -->
     <div class="container">
-        <h1>Total Attendances =  {{attendances | length}}</h1>
+        <h1>length of listofAttendanceRecord =  {{listofAttendanceRecord | length}}</h1>
         <!-- display student details here -->
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Course Name</th>
-                    <th scope="col">Course Credit</th>
+                    <th scope="col">Student Name</th>
                     <th scope="col">ForDate</th>
                     <th scope="col">isPresent</th>
                 </tr>
             </thead>
             <tbody>
-                <tr> {% for attendace in attendances %}
-                    {{attendace.course.name}} == {{course}}
-                    <!-- user =  '{{user.username|stringformat:'s'}}'    
-                      student = '{{attendace.student|stringformat:'s'}}' <br/> -->{% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
-                      {% if attendace.course.name|stringformat:"s" == course|stringformat:"s" %}
-                    <th scope="row">{{attendace.course}}</th>
-                    <td>{{attendace.course.credit}}</td>
-                    <td>{{attendace.forDate}}</td>
-                    <td>{{attendace.isPresent}}</td>
+
+
+
+                <tr> {% for eachRecord in listofAttendanceRecord %}
+                   
+                    <th scope="row">{{eachRecord.studentName}}</th>
+                    <td>{{eachRecord.studentName}}</td>
+                    <td>{{eachRecord.attendanceDate}}</td>
+                    <td>{{eachRecord.isPresent}}</td>
                     <!-- <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td> -->
                     
     
@@ -34,7 +34,7 @@ Detailed Attendance for student {{student}} and course {{course}}
     
     
     
-                </tr> {% endif %} {% endif %} {% endfor %} </tbody>
+                </tr> {% endfor %} </tbody>
         </table>
     
     <a href = "/student"> go to students main page</a></div>
