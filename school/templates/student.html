@@ -38,9 +38,9 @@
 						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->	
 						<input type="hidden" name="student" value="{{user.username}}" />
 						<input type="hidden" name="course" value="{{eachClass.courseName}}" /> {% now "Y-m-d" as todays_date %} 
-						{% if isSchoolDayToday %}
+						{% if isSchoolDayToday == False%}
 						<button class="btn btn-warning my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>off today</button> 
-						{% elif attendace.modified_date|date:"Y-m-d" != todays_date %}
+						{% elif attendace.modified_date|date:"Y-m-d" != todays_date %} istodaysattendanceDoneis={{eachClass.isTodaysAttendanceDone}}
 						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add">Add todays attendance</button> {% else %}
 						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>Already Add</button> {% endif %}
 						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->

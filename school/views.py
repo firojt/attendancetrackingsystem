@@ -160,6 +160,7 @@ class StudetClass:
     uptoTodayAttendancePercent: float
     totalSchoolDays: int
     uptoTodaySchoolDays : int
+    isTodaysAttendanceDone : bool
 
 
 def getTotalAttendanceForClass(courseNameInList):
@@ -203,7 +204,15 @@ def getUptoTodayTotalSchoolDays(className):
     list_totalSchoolDaysUptoToday = workdays(classStartDate, date.today()) 
     return len(list_totalSchoolDaysUptoToday)
     
-  
+def retrieveTodaysAttendanceDone(forClass,forStudent):
+    student_id = Student.objects.get(name=forStudent).id
+    course_id = Course.objects.get(name=forClass).id
+    attendancesForParticularClassAndStudent = Attendance.objects.filter(student=student_id, course=course_id).values()
+    for each in attendancesForParticularClassAndStudent:
+        if(each['forDate'] == date.today()):
+            return True
+    return False
+    
     
 
 def getListofClassForStudent(student):
@@ -214,6 +223,7 @@ def getListofClassForStudent(student):
     for eachUniqueClass in uniqueListofAttendedClassForStudent:
         studetClass = StudetClass()
         totalAttendaceForClass = getTotalAttendaceForClass(eachUniqueClass,student)
+        isTodaysAttendanceDone = retrieveTodaysAttendanceDone(eachUniqueClass,student)
         uptoTodayAttendancePercent = getUptoTodayAttendancePercent(eachUniqueClass,student)
 
         totalSchoolDays = getTotalSchoolDays(eachUniqueClass)
@@ -228,6 +238,8 @@ def getListofClassForStudent(student):
         studetClass.uptoTodayAttendancePercent = uptoTodayAttendancePercent
         studetClass.totalSchoolDays= totalSchoolDays
         studetClass.uptoTodaySchoolDays = uptoTodaySchoolDays
+        studetClass.isTodaysAttendanceDone = isTodaysAttendanceDone
+
         listofClassForStudent.append(studetClass)
 
     return listofClassForStudent
@@ -260,7 +272,14 @@ def studentAndCourseView(request):
     attendaces = Attendance.objects.all
     student = request.user.username
     listofStudentClass = getListofClassForStudent(student)
-    isSchoolDayToday = True
+    weekno = datetime.datetime.today().weekday()
+    logger.info("week no is {0}".format(weekno))
+
+    if weekno < 5:
+        isSchoolDayToday = True  
+    else:
+        isSchoolDayToday = True #todo need to change back to False later 
+        logger.info("week no is {0} and isSchoolday is {1}".format(weekno, isSchoolDayToday))
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass, 'isSchoolDayToday':isSchoolDayToday})
 
 # alterante student list view 
@@ -313,6 +332,8 @@ def viewCourse(request):
     return render(request, 'viewCourse.html', context)
 
 
+def retrieveIfTodaysAttendanceNotAlreadyAdded(course, student):
+    return True
 
 def studentAndCourseAddView(request):
     # form handling 
@@ -328,7 +349,20 @@ def studentAndCourseAddView(request):
 
     student =request.POST['student']
     course =request.POST['course']
+    courseInstance = Course.objects.get(name=course)
+    studentInstance = Student.objects.get(name=student)
     logger.info("attendance to add for student '{0}' and course '{1}' for date '{2}'".format(student,course, date.today()))
+    weekno = datetime.datetime.today().weekday()
+    todaysAttendanceNotAlreadyAdded = retrieveIfTodaysAttendanceNotAlreadyAdded(course, student)
+    if (weekno < 7 and todaysAttendanceNotAlreadyAdded): #todo need to change to 5 later 
+        # then add attendance to the db
+        attendance = Attendance()
+        attendance.totalAttendanceUptoToday = 12
+        attendance.course = courseInstance
+        attendance.student = studentInstance
+        attendance.isPresent = True
+        attendance.forDate = date.today()
+        attendance.save()
 
     studentModel = Student.objects.filter(name=student).first()
     courseModel = Course.objects.filter(name=course).first()
@@ -337,7 +371,7 @@ def studentAndCourseAddView(request):
     attendace.save()
 
     context= {'form': form, 'course': course, 'student':student,
-              'submitbutton': submitbutton}
+              'submitbutton': submitbutton, 'todaysDate': date.today(), 'todaysAttendanceNotAlreadyAdded':todaysAttendanceNotAlreadyAdded}
     
     return render(request, 'attendanceAdded.html', context)
 
