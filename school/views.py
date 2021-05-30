@@ -326,8 +326,6 @@ def getTotalAttendancePercentForStudentsForCourse(listofStudentsforCourses):
     return courseAndAggregatePercent
 
 
-
-
 @login_required(login_url='/accounts/login/')
 def teacherPageView(request):
     
@@ -391,8 +389,19 @@ class UserForm(forms.Form):
     course= forms.CharField(max_length=100)
     student= forms.CharField(max_length=100)
     course11=forms.CharField
-    
+
+def retrieveAllStudentsForThisCourse(courseName):
+    allAttendancesForThisCourse = Attendance.objects.filter(course=Course.objects.get(name=courseName).id).values()
+    list_allAttendancesForThisCourse = [entry for entry in allAttendancesForThisCourse]  
+    listOfStudentsForThisCourse = []
+    for each in list_allAttendancesForThisCourse:
+        # logger.info("each is {0}".format(each))
+        listOfStudentsForThisCourse.append(each['student_id'])
+    unique_listOfStudentsForThisCourse = list(set(listOfStudentsForThisCourse))
+    return unique_listOfStudentsForThisCourse
+
 def viewCourse(request):
+    
     submitbutton= request.POST.get("submit")
     course=''
     form= UserForm(request.POST or None)
@@ -400,8 +409,12 @@ def viewCourse(request):
     courses = Course.objects.all
     if form.is_valid():
         course= form.cleaned_data.get("course")
+    
+    courseName =request.POST['course']
+    allStudentsForThisCourse = retrieveAllStudentsForThisCourse(courseName)
+    logger.info("line 415  : allStudentsForThisCourse= {0}".format(allStudentsForThisCourse))
     context= {'form': form, 'course': request.POST.get("viewCourse"),
-              'submitbutton': submitbutton, 'attendances': attendaces, 'courses':courses}
+              'submitbutton': submitbutton, 'attendances': attendaces, 'courses':courses, 'courseName':courseName}
     
     return render(request, 'viewCourse.html', context)
 
