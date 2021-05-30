@@ -85,6 +85,16 @@ def workdays(d, end, excluded=(6, 7)):
     return days
 
 def wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList):
+    for attendance in list_attendanceList:
+        # if (attendance['student'] == student and attendance['course'])
+        logger.info("ispresent - attendance total = '{0}' school day is '{1}'".format(attendance['course_id'], schoolDay))
+        courseNameInList = Course.objects.get(pk=attendance['course_id']).name
+        studentNameInList = Student.objects.get(pk=attendance['student_id']).name
+        logger.info("ispresent - attendance course = '{0}' student is  '{1}'".format(courseNameInList, studentNameInList))
+
+    return True
+        
+
     return True
 
 def getListofAttendanceRecord(course, student):
@@ -118,7 +128,7 @@ def getListofAttendanceRecord(course, student):
     return listofAttendanceRecord
         
 def studentDetailedView(request):
-    unitTestMy() 
+    # unitTestMy() 
     logger.info("************************************")
     # logger.info(workdays(datetime.datetime(2021, 5, 5),
             #    datetime.datetime(2021, 5, 30)))
