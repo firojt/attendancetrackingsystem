@@ -287,6 +287,49 @@ def studentAndCourseView(request):
         logger.info("week no is {0} and isSchoolday is {1}".format(weekno, isSchoolDayToday))
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass, 'isSchoolDayToday':isSchoolDayToday})
 
+def getAllStudentsForThisCourse(course):
+    allAttendancesForThisCourse = Attendance.objects.filter(course=course['id']).values()
+    list_allAttendancesForThisCourse = [entry for entry in allAttendancesForThisCourse]  
+    listOfStudentsForThisCourse = []
+    for each in list_allAttendancesForThisCourse:
+        # logger.info("each is {0}".format(each))
+        listOfStudentsForThisCourse.append(each['student_id'])
+    unique_listOfStudentsForThisCourse = list(set(listOfStudentsForThisCourse))
+    return unique_listOfStudentsForThisCourse
+
+
+@login_required(login_url='/accounts/login/')
+def teacherPageView(request):
+     # find assigned courses 
+    teacherName = request.user.username
+    teacherId = Teacher.objects.get(name=teacherName).id
+    assignedCourses = Course.objects.filter(teacher=teacherId).values()
+    logger.info("assignedCourses size is = {0} and type is {1}".format(len(assignedCourses), type(assignedCourses)))
+    # for each course find find list of all students enrolled 
+    allCoursesAndStudentsEnrolled = {}
+    for eachCourse in assignedCourses:
+        logger.info("each course is {0}". format(eachCourse))
+        allStudentsForThisCourse = getAllStudentsForThisCourse(eachCourse)
+        eachCourseName = eachCourse['name']
+        allCoursesAndStudentsEnrolled[eachCourseName] = allStudentsForThisCourse
+    logger.info("list of class and enrolled students are {0} for teacher {1}".format(allCoursesAndStudentsEnrolled, teacherName))
+        # allAttendancesForThisCourse = Attendance.objects.filter(course=eachCourse.id).values()
+        # for each in allAttendancesForThisCourse:
+
+            
+        
+        
+    # for each student find total attendance    
+       # totalAttendanceForaStudent = Attendance.objects.get(len(Attendance=Course.id)) - my logic
+   
+    # for each student find total attendance percentage 
+    # find aggregate percentage
+
+    context= {'teacherName':teacherName}
+    logger.info("teacherName is {0}".format(teacherName))
+    return render(request, 'teacherPage.html', context)
+
+
 # alterante student list view 
 @login_required(login_url='/accounts/login/')
 def teacherView(request):
