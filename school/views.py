@@ -96,9 +96,7 @@ def wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList):
             if (attendance['forDate'] == schoolDay):
                 return attendance['isPresent']
     return False
-        
-
-    return True
+  
 
 def getListofAttendanceRecord(course, student):
     listofAttendanceRecord = []
@@ -114,7 +112,7 @@ def getListofAttendanceRecord(course, student):
     logger.info(courseStartDate)
     logger.info(courseEndDate)
     logger.info(type(courseStartDate))
-    listOfSchoolDays = workdays(courseStartDate, courseEndDate) # probably need to change to business days
+    listOfSchoolDays = workdays(courseStartDate, date.today()) # probably need to change to business days
     logger.info("list of school days are ")
     logger.info(listOfSchoolDays)
     logger.info("total school days is ")
