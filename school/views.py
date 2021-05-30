@@ -91,8 +91,11 @@ def wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList):
         courseNameInList = Course.objects.get(pk=attendance['course_id']).name
         studentNameInList = Student.objects.get(pk=attendance['student_id']).name
         logger.info("ispresent - attendance course = '{0}' student is  '{1}'".format(courseNameInList, studentNameInList))
-
-    return True
+        if (courseNameInList == course and studentNameInList == student):
+            logger.info("course and student name matches school day is '{0}' and attendanceDate is '{1}'".format(schoolDay , attendance['forDate']))
+            if (attendance['forDate'] == schoolDay):
+                return attendance['isPresent']
+    return False
         
 
     return True
