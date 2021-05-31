@@ -14,11 +14,11 @@
 					</thead>
 					<tbody>
 						<tr>
-							<!-- {{ user.username }} -->{% for teacher in teachers %} {% if user.username|stringformat:"s" == teacher.name|stringformat:"s" %}
+
 							<th scope="row">
-								<button class="btn btn-success"> Currently Logged In Teacher {{teacher.name}}</button>
+								<button class="btn btn-success"> Currently Logged In Teacher {{user.username}}</button>
 							</th>
-						</tr> {% endif %} {% endfor %} </tbody>
+						</tr> </tbody>
 				</table>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 			<tr>
 				<th scope="col">Course</th>
 				<th scope="col">Average Percentage</th>
-				<th scope="col">Action</th>
+				<th scope="col">View Detail</th>
 			</tr>
 		</thead>
 		<tbody> {% for key, value in courseAndAggregatePercent.items %}

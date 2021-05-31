@@ -2,20 +2,20 @@
 <hr/> {% block content %}
 <br/>
 <div class="container"> 
-	<h3>length of listofStudentClass =  {{listofStudentClass | length}}</h3>
+	<!-- <h3>length of listofStudentClass =  {{listofStudentClass | length}}</h3> -->
 	{% if listofStudentClass %}
 	<!-- display student details here -->
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th scope="col">courseName</th>
-				<th scope="col">courseStartDate</th>
-				<th scope="col">courseEndDate</th>
-				<th scope="col">courseCredit</th>
-				<th scope="col">totalAttendacePercent</th>
-				<th scope="col">uptoTodayAttendancePercent</th>
-				<th scope="col">Add Todays Attendance</th>
-				<th scope="col">View Breakdown</th>
+				<th scope="col">Course Name</th>
+				<th scope="col">Start Date</th>
+				<th scope="col">End Date</th>
+				<th scope="col">Credit</th>
+				<th scope="col">Total Attendance(%)</th>
+				<th scope="col">Current Attendance(%)</th>
+				<th scope="col">Add Today's Attendance</th>
+				<th scope="col">View Prior Days Attendance</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -39,7 +39,7 @@
 						<input type="hidden" name="student" value="{{user.username}}" />
 						<input type="hidden" name="istodaysattendanceDoneis" value="{{eachClass.isTodaysAttendanceDone}}" />
 						<input type="hidden" name="course" value="{{eachClass.courseName}}" /> {% now "Y-m-d" as todays_date %} 
-						istodaysattendanceDoneis={{eachClass.isTodaysAttendanceDone}}
+						<!-- istodaysattendanceDoneis={{eachClass.isTodaysAttendanceDone}} -->
 						{% if isSchoolDayToday == False%}
 						<button class="btn btn-warning my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>off today</button> 
 						{% elif  eachClass.isTodaysAttendanceDone %} 
@@ -69,62 +69,6 @@
 <br/>
 <br/>
 <br/>
-<div class="container">
-	<!-- <h1>Total Attendances =  {{attendaces | length}}</h1> -->{% if courses %}
-	<!-- display student details here -->
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th scope="col">Course Name</th>
-				<th scope="col">Course Credit</th>
-				<th scope="col">ForDate</th>
-				<th scope="col">isPresent</th>
-				<th scope="col">Total Attendance</th>
-				<th scope="col">Add Today's Attendance</th>
-				<th scope="col">View Detailed Attendance</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr> {% for attendace in attendances %}
-				<!-- user =  '{{user.username|stringformat:'s'}}'    
-                  student = '{{attendace.student|stringformat:'s'}}' <br/> -->{% if user.username|stringformat:"s" == attendace.student|stringformat:"s" %}
-				<th scope="row">{{attendace.course}}</th>
-				<td>{{attendace.course.credit}}</td>
-				<td>{{attendace.forDate}}</td>
-				<td>{{attendace.isPresent}}</td>
-				<!-- <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td> -->
-				<td>{% widthratio attendace.totalAttendanceUptoToday attendace.course.totalClassDay 100 %} %</td>
-				
-				<td>
-					<form action="add/" method="POST" id="buttonForm"> {% csrf_token %}
-						<!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
-						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
-						<input type="hidden" name="student" value="{{attendace.student}}" />
-						<input type="hidden" name="course" value="{{attendace.course}}" /> {% now "Y-m-d" as todays_date %} {% if attendace.modified_date|date:"Y-m-d" != todays_date %}
-						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add">Add</button> {% else %}
-						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>Already Added</button> {% endif %}
-						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
-					</form>
-				</td>
 
-				<!-- view button  -->
-				<td>
-					<form action="view/" method="POST" id="buttonViewForm"> {% csrf_token %}
-						<!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
-						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
-						<input type="hidden" name="student" value="{{attendace.student}}" />
-						<input type="hidden" name="course" value="{{attendace.course}}" /> 
-						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add">View</button> 
-						
-						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
-					</form>
-				</td>
-
-
-
-
-			</tr> {% endif %} {% endfor %} </tbody>
-	</table> {% else %}
-	<p>There are no courses in the school.</p> {% endif %} </div>
 <br/>
 {% endblock %} 

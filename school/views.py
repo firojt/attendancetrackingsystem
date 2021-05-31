@@ -51,7 +51,7 @@ logging.config.dictConfig({
 # This retrieves a Python logging instance (or creates it)
 logger = logging.getLogger(__name__)
 
-@login_required(login_url='/accounts/login/')
+
 def signout(request):
     return render(request, 'registration/signout.html')
     
@@ -177,7 +177,7 @@ def getUniqueListofAttendedClassForStudent(student):
     allAttendancesForThisStudent = Attendance.objects.filter(student=student_id).values()
     list_allAttendancesForThisStudent = [entry for entry in allAttendancesForThisStudent]  
     for attendanceForThisStudent in list_allAttendancesForThisStudent:
-        courseKey = (attendanceForThisStudent['course_id'])
+        courseKey = (attendanceForThisStudent['course_id'])  
         courseName = Course.objects.get(pk=courseKey).name
         listofClass.append(courseName)
     setFromList = set(listofClass)
@@ -284,7 +284,7 @@ def studentAndCourseView(request):
     if weekno < 5:
         isSchoolDayToday = True  
     else:
-        isSchoolDayToday = True #todo need to change back to False later - frontend validation
+        isSchoolDayToday = False #todo need to change back to False later - frontend validation
         logger.info("week no is {0} and isSchoolday is {1}".format(weekno, isSchoolDayToday))
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass, 'isSchoolDayToday':isSchoolDayToday})
 
@@ -377,7 +377,7 @@ def teacherView(request):
             listofPercentage.append(currentPercent)
             averagePercentIs = sum(listofPercentage) / len(listofPercentage)
             averagePercentIs = round(averagePercentIs, 2)
-            my_attendance_dict[currentKey] = averagePercentIs      
+            my_attendance_dict[currentKey] = averagePercentIs         
         else:
             currentPercent = currentValue / totalSchoolDaysForCurrentClass * 100
             listofPercentage.append(currentPercent)
@@ -469,7 +469,7 @@ def studentAndCourseAddView(request):
     logger.info("attendance to add for student '{0}' and course '{1}' for date '{2}' and isTodaysAttendanceDone is {3}".format(student,course, date.today(), isTodaysAttendanceDone))
     weekno = datetime.datetime.today().weekday()
     todaysAttendanceNotAlreadyAdded = retrieveIfTodaysAttendanceNotAlreadyAdded(course, student)
-    if (weekno < 7 and isTodaysAttendanceDone == 'False'): #todo need to change to 5 later  - backend validation
+    if (weekno < 5 and isTodaysAttendanceDone == 'False'): #todo need to change to 5 later  - backend validation
         # then add attendance to the db
         attendance = Attendance()
         attendance.totalAttendanceUptoToday = 12
