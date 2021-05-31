@@ -1,4 +1,5 @@
 
+import abc
 from school.models import Student, Teacher, Course,Attendance
 from django.views import generic
 from django.shortcuts import render
@@ -400,6 +401,12 @@ def retrieveAllStudentsForThisCourse(courseName):
     unique_listOfStudentsForThisCourse = list(set(listOfStudentsForThisCourse))
     return unique_listOfStudentsForThisCourse
 
+
+class CourseDetailedViewTeacher:
+    student: str
+    totalAttendanceUptoToday : int
+
+
 def viewCourse(request):
     
     submitbutton= request.POST.get("submit")
@@ -413,8 +420,26 @@ def viewCourse(request):
     courseName =request.POST['course']
     allStudentsForThisCourse = retrieveAllStudentsForThisCourse(courseName)
     logger.info("line 415  : allStudentsForThisCourse= {0}".format(allStudentsForThisCourse))
+
+    # finduptoattendancepercentage for each student
+    list_courseDetailedViewTeacher = []
+    for eachStudent in allStudentsForThisCourse:
+        courseDetailedViewTeacher = CourseDetailedViewTeacher()
+        studentName = Student.objects.get(pk=eachStudent).name
+        totalAttendaceForClass = getTotalAttendaceForClass(courseName,studentName)
+        courseDetailedViewTeacher.student = studentName
+        courseDetailedViewTeacher.totalAttendanceUptoToday = totalAttendaceForClass
+        list_courseDetailedViewTeacher.append(courseDetailedViewTeacher)
+
+    totalSchoolDays = getTotalSchoolDays(courseName)
+    uptoTodaySchoolDays = getUptoTodayTotalSchoolDays(courseName)
+    logger.info("total- {0} uptotoday - {1}".format(totalSchoolDays, uptoTodaySchoolDays))
+
+
+
+
     context= {'form': form, 'course': request.POST.get("viewCourse"),
-              'submitbutton': submitbutton, 'attendances': attendaces, 'courses':courses, 'courseName':courseName}
+              'submitbutton': submitbutton, 'attendances': attendaces, 'courses':courses, 'courseName':courseName, 'uptoTodaySchoolDays':uptoTodaySchoolDays, 'list_courseDetailedViewTeacher':list_courseDetailedViewTeacher, 'totalSchoolDays':totalSchoolDays}
     
     return render(request, 'viewCourse.html', context)
 
