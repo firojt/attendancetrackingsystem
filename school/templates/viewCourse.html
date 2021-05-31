@@ -5,7 +5,6 @@
 <div class = "container">
   
   <br/> <br/> <br/>
-       <!-- courseName = {{courseName}} -->
        <table class="table table-striped">
           <thead>
             <tr>
@@ -24,9 +23,6 @@
               <td>{{each.student}}</td>
               <td>{{each.totalAttendanceUptoToday}} / {{uptoTodaySchoolDays}} ({% widthratio each.totalAttendanceUptoToday uptoTodaySchoolDays 100 %} %)</td>
               <td>{{each.totalAttendanceUptoToday}} / {{totalSchoolDays}} ({% widthratio each.totalAttendanceUptoToday totalSchoolDays 100 %} %)</td>
-              <!-- <td>{% widthratio each.totalAttendanceUptoToday uptoTodaySchoolDays 100 %} %</td> -->
-              
-              
             </tr>
            
             {% endfor %}
@@ -39,8 +35,6 @@
   
   <a href="/teacher">    Click here to go to teachers page</a>
   </div>
-
-<!-- above here we are going to display attendance table -->
 
 <br/><br/><br/><br/>
 {% endblock %}

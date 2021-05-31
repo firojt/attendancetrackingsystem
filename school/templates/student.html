@@ -34,38 +34,29 @@
 
 				<td>
 					<form action="add/" method="POST" id="buttonForm"> {% csrf_token %}
-						<!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
-						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->	
 						<input type="hidden" name="student" value="{{user.username}}" />
 						<input type="hidden" name="istodaysattendanceDoneis" value="{{eachClass.isTodaysAttendanceDone}}" />
 						<input type="hidden" name="course" value="{{eachClass.courseName}}" /> {% now "Y-m-d" as todays_date %} 
-						<!-- istodaysattendanceDoneis={{eachClass.isTodaysAttendanceDone}} -->
 						{% if isSchoolDayToday == False%}
 						<button class="btn btn-warning my-2 my-sm-0 " type="submit" name="add" value="Add" disabled>off today</button> 
 						{% elif  eachClass.isTodaysAttendanceDone %} 
 						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" id="alreadyAdded" value="Add" disabled>Already Added</button> {% else %}
 						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="Add" > Add</button> {% endif %}
-						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
 					</form>
 				</td>
 
 				<!-- view button  -->
 				<td>
 					<form action="view/" method="POST" id="buttonViewForm"> {% csrf_token %}
-						<!-- <input type="hidden" name="course" value="{{attendace.course}}" /> -->
-						<!-- <input type="hidden" name="course11" value="coursehardcoded" /> -->
 						<input type="hidden" name="student" value="{{user.username}}" />
 						<input type="hidden" name="course" value="{{eachClass.courseName}}" /> 
 						<button class="btn btn-primary my-2 my-sm-0 " type="submit" name="add" value="view">View</button> 
-						
-						<!-- <button  class="btn btn-primary my-2 my-sm-0 my-add-button"  type="submit" name="add" value="Add">Add-{{attendace.course}}-{{attendace.student}}</button> -->
 					</form>
 				</td>
 
 			</tr> {% endfor %} </tbody>
 	</table> {% else %}
 	<p></p> {% endif %} </div>
-<!-- div for attendaces -->
 <br/>
 <br/>
 <br/>

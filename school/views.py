@@ -73,10 +73,8 @@ def unitTestMy():
     attendance1.attendanceDate = date.today()
     attendance1.isPresent = True
 
-    logger.info("object created and x is " )
+
     attrs = vars(attendance1)
-    logger.info(', '.join("%s: %s" % item for item in attrs.items()))
-    # logger.info(str(attendance1.attendanceDate))
 
 # 1st start date , 2nd is the end date and 3rd is default that excludes saturday=6 and sunday=7
 def workdays(d, end, excluded=(6, 7)):
@@ -90,12 +88,9 @@ def workdays(d, end, excluded=(6, 7)):
 def wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList):
     for attendance in list_attendanceList:
         # if (attendance['student'] == student and attendance['course'])
-        logger.info("ispresent - attendance total = '{0}' school day is '{1}'".format(attendance['course_id'], schoolDay))
         courseNameInList = Course.objects.get(pk=attendance['course_id']).name
         studentNameInList = Student.objects.get(pk=attendance['student_id']).name
-        logger.info("ispresent - attendance course = '{0}' student is  '{1}'".format(courseNameInList, studentNameInList))
         if (courseNameInList == course and studentNameInList == student):
-            logger.info("course and student name matches school day is '{0}' and attendanceDate is '{1}'".format(schoolDay , attendance['forDate']))
             if (attendance['forDate'] == schoolDay):
                 return attendance['isPresent']
     return False
@@ -103,26 +98,16 @@ def wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList):
 
 def getListofAttendanceRecord(course, student):
     listofAttendanceRecord = []
-    logger.info("getListofAttendanceRecord am called")
     # iterate and create list of attendance record
     attendanceList = Attendance.objects.values()             
     list_attendanceList = [entry for entry in attendanceList]  
-    logger.info("total attendance record in db are- ")
-    logger.info(len(list_attendanceList))
+
+
     courseStartDate = Course.objects.filter(name=course).first().classStartDate
     courseEndDate = Course.objects.filter(name=course).first().classEndDate
-    logger.info("course start date and end date are ")
-    logger.info(courseStartDate)
-    logger.info(courseEndDate)
-    logger.info(type(courseStartDate))
     listOfSchoolDays = workdays(courseStartDate, date.today()) 
-    logger.info("list of school days are ")
-    logger.info(listOfSchoolDays)
-    logger.info("total school days is ")
-    logger.info(len(listOfSchoolDays))
     for schoolDay in listOfSchoolDays:
         everyDayAttendance = AttendanceRecord()
-        logger.info("date = %s" % schoolDay)
         isPresentOnthisDay = wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList)
         everyDayAttendance.courseName = course
         everyDayAttendance.studentName = student
@@ -134,17 +119,11 @@ def getListofAttendanceRecord(course, student):
 @login_required(login_url='/accounts/login/')    
 def studentDetailedView(request):
     # unitTestMy() 
-    logger.info("************************************")
-    # logger.info(workdays(datetime.datetime(2021, 5, 5),
-            #    datetime.datetime(2021, 5, 30)))
-    logger.info("************************************")
     student = value=request.POST['student']
     course = value=request.POST['course']
     attendances = Attendance.objects.all
     listofAttendanceRecord = getListofAttendanceRecord(course,student)
     context = {'student':student , 'course':course, 'attendances':attendances, 'listofAttendanceRecord':listofAttendanceRecord}
-    logger.info("before passing to render")
-    logger.info([each.attendanceDate for each in listofAttendanceRecord])
     return render(request, 'viewDetailedAtendance.html', context)
 
 @login_required(login_url='/accounts/login/')
@@ -249,28 +228,6 @@ def getListofClassForStudent(student):
 
     return listofClassForStudent
 
-
-    
-
-    # attendanceList = Attendance.objects.values()             
-    # list_attendanceList = [entry for entry in attendanceList]  
-    # totalSchoolDays = 12
-
-
-    # for attendance in list_attendanceList:
-    #     studentNameInList = Student.objects.get(pk=attendance['student_id']).name
-    #     if(studentNameInList == student):
-            
-    #         courseNameInList = Course.objects.get(pk=attendance['course_id']).name
-    #         totalAttendanceForClass  = getTotalAttendanceForClass(courseNameInList)
-    #         courseStartDate = Course.objects.filter(name=courseNameInList).first().classStartDate
-    #         courseEndDate = Course.objects.filter(name=courseNameInList).first().classEndDate
-    #         totalSchoolDays = len(workdays(courseStartDate, courseEndDate))
-
-        
-
-
-# alterante student list view 
 @login_required(login_url='/accounts/login/')
 def studentAndCourseView(request):
     students = Student.objects.all
@@ -279,13 +236,11 @@ def studentAndCourseView(request):
     student = request.user.username
     listofStudentClass = getListofClassForStudent(student)
     weekno = datetime.datetime.today().weekday()
-    logger.info("week no is {0}".format(weekno))
 
     if weekno < 5:
         isSchoolDayToday = True  
     else:
         isSchoolDayToday = False #todo need to change back to False later - frontend validation
-        logger.info("week no is {0} and isSchoolday is {1}".format(weekno, isSchoolDayToday))
     return render(request, 'student.html', {'courses': courses, 'students': students, 'attendances': attendaces, 'listofStudentClass':listofStudentClass, 'isSchoolDayToday':isSchoolDayToday})
 
 def getAllStudentsForThisCourse(course):
@@ -293,7 +248,6 @@ def getAllStudentsForThisCourse(course):
     list_allAttendancesForThisCourse = [entry for entry in allAttendancesForThisCourse]  
     listOfStudentsForThisCourse = []
     for each in list_allAttendancesForThisCourse:
-        # logger.info("each is {0}".format(each))
         listOfStudentsForThisCourse.append(each['student_id'])
     unique_listOfStudentsForThisCourse = list(set(listOfStudentsForThisCourse))
     return unique_listOfStudentsForThisCourse
@@ -301,7 +255,6 @@ def getAllStudentsForThisCourse(course):
 def getListofStudentsforCourses(courses):
     allCoursesAndStudentsEnrolled = {}
     for eachCourse in courses:
-        logger.info("each course is {0}". format(eachCourse))
         allStudentsForThisCourse = getAllStudentsForThisCourse(eachCourse)
         eachCourseName = eachCourse['name']
         allCoursesAndStudentsEnrolled[eachCourseName] = allStudentsForThisCourse
@@ -317,7 +270,6 @@ def getTotalAttendanceofStudentForCourse(courseid, studentid):
 def getTotalAttendancePercentForStudentsForCourse(listofStudentsforCourses):
     courseAndAggregatePercent = {}
     for each in listofStudentsforCourses:
-        logger.info("line 316-> each is class =  {0} and students are {1}".format(each, listofStudentsforCourses[each]))
         allStudentPercentage = []
         for eachStudent in listofStudentsforCourses[each]:
             totalAttendanceofStudentForCourse = getTotalAttendanceofStudentForCourse(Course.objects.get(name=each).id, eachStudent)
@@ -334,23 +286,16 @@ def teacherPageView(request):
     teacherName = request.user.username
     teacherId = Teacher.objects.get(name=teacherName).id
     assignedCourses = Course.objects.filter(teacher=teacherId).values()
-    logger.info("assignedCourses size is = {0} and type is {1}".format(len(assignedCourses), type(assignedCourses)))
 
     # for each course find the list of all students enrolled 
     listofStudentsforCourses = getListofStudentsforCourses(assignedCourses)
-    logger.info("line 331-> list of class and enrolled students are {0} for teacher {1}".format(listofStudentsforCourses, teacherName))
 
     # for each course find total percentage
     courseAndAggregatePercent = getTotalAttendancePercentForStudentsForCourse(listofStudentsforCourses)
-    logger.info("courseAndAggregatePercent= {0}".format(courseAndAggregatePercent))
 
-    # totalAttendanceForaStudent = Attendance.objects.get(len(Attendance=Course.id)) - my logic
-   
     # for each student find total attendance percentage 
     # find aggregate percentage
-
     context= {'teacherName':teacherName, 'courseAndAggregatePercent': courseAndAggregatePercent}
-    logger.info("teacherName is {0}".format(teacherName))
     return render(request, 'teacherPage.html', context)
 
 
@@ -396,7 +341,6 @@ def retrieveAllStudentsForThisCourse(courseName):
     list_allAttendancesForThisCourse = [entry for entry in allAttendancesForThisCourse]  
     listOfStudentsForThisCourse = []
     for each in list_allAttendancesForThisCourse:
-        # logger.info("each is {0}".format(each))
         listOfStudentsForThisCourse.append(each['student_id'])
     unique_listOfStudentsForThisCourse = list(set(listOfStudentsForThisCourse))
     return unique_listOfStudentsForThisCourse
@@ -419,7 +363,6 @@ def viewCourse(request):
     
     courseName =request.POST['course']
     allStudentsForThisCourse = retrieveAllStudentsForThisCourse(courseName)
-    logger.info("line 415  : allStudentsForThisCourse= {0}".format(allStudentsForThisCourse))
 
     # finduptoattendancepercentage for each student
     list_courseDetailedViewTeacher = []
@@ -433,10 +376,6 @@ def viewCourse(request):
 
     totalSchoolDays = getTotalSchoolDays(courseName)
     uptoTodaySchoolDays = getUptoTodayTotalSchoolDays(courseName)
-    logger.info("total- {0} uptotoday - {1}".format(totalSchoolDays, uptoTodaySchoolDays))
-
-
-
 
     context= {'form': form, 'course': request.POST.get("viewCourse"),
               'submitbutton': submitbutton, 'attendances': attendaces, 'courses':courses, 'courseName':courseName, 'uptoTodaySchoolDays':uptoTodaySchoolDays, 'list_courseDetailedViewTeacher':list_courseDetailedViewTeacher, 'totalSchoolDays':totalSchoolDays}
@@ -466,7 +405,6 @@ def studentAndCourseAddView(request):
 
     courseInstance = Course.objects.get(name=course)
     studentInstance = Student.objects.get(name=student)
-    logger.info("attendance to add for student '{0}' and course '{1}' for date '{2}' and isTodaysAttendanceDone is {3}".format(student,course, date.today(), isTodaysAttendanceDone))
     weekno = datetime.datetime.today().weekday()
     todaysAttendanceNotAlreadyAdded = retrieveIfTodaysAttendanceNotAlreadyAdded(course, student)
     if (weekno < 5 and isTodaysAttendanceDone == 'False'): #todo need to change to 5 later  - backend validation
@@ -477,7 +415,6 @@ def studentAndCourseAddView(request):
         attendance.student = studentInstance
         attendance.isPresent = True
         attendance.forDate = date.today()
-        logger.info("trying to add attendance to the db")
         attendance.save()
 
     studentModel = Student.objects.filter(name=student).first()

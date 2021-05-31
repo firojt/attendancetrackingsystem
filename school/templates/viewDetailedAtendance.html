@@ -1,11 +1,6 @@
 {% extends "base_template.html" %} {% block content %}
-<!-- jumbotron -->
 
-<!-- Detailed Attendance for student {{student}} and course {{course}} -->
-    <!-- div for attendance based on present and absent days -->
     <div class="container">
-        <!-- <h1>length of listofAttendanceRecord =  {{listofAttendanceRecord | length}}</h1> -->
-        <!-- display student details here -->
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -16,9 +11,6 @@
                 </tr>
             </thead>
             <tbody>
-
-
-
                 <tr> {% for eachRecord in listofAttendanceRecord %}
                    
                     <th scope="row">{{eachRecord.courseName}}</th>
@@ -29,15 +21,6 @@
                     {% else %}
                     <td class="btn-danger">Absent</td>
                     {%endif%}
-                    <!-- <td>{{attendace.totalAttendanceUptoToday | stringformat:'s'}}</td> -->
-                    
-    
-                    <!-- view button  -->
-                   
-    
-    
-    
-    
                 </tr> {% endfor %} </tbody>
         </table>
     
