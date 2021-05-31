@@ -9,17 +9,16 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-							<th scope="col">Teacher1</th>
+							<th scope="col">Teacher</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
+
 							<th scope="row">
-								<!-- <button class="btn btn-success"> Currently Logged In Teacher {{user.username}}</button> -->
-								content
+								<button class="btn btn-success"> Currently Logged In Teacher {{user.username}}</button>
 							</th>
-						</tr>  
-					</tbody>
+						</tr> </tbody>
 				</table>
 			</div>
 		</div>
@@ -34,10 +33,10 @@
 			<tr>
 				<th scope="col">Course</th>
 				<th scope="col">Average Percentage</th>
-				<th scope="col">Action</th>
+				<th scope="col">View Detail</th>
 			</tr>
 		</thead>
-		<tbody> {% for key, value in my_attendance_dict.items %}
+		<tbody> {% for key, value in courseAndAggregatePercent.items %}
 			<tr>
 				<td> {{key}}</td>
 				<td> {{value}} %</td>

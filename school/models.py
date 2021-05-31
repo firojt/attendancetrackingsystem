@@ -51,6 +51,7 @@ class Attendance(models.Model):
     isPresent = models.BooleanField(default='True')
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+    forDate = models.DateField(default=None, blank=True, null=True)
     
     def __str__(self):
         sname = Student.objects.get(name=self.student)

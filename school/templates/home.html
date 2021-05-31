@@ -18,8 +18,11 @@
 
 <div class="container">
 
+  {%  if  user.is_authenticated == False %}
+
 
   <a class="btn btn-primary" href="/accounts/login">Please login here</a>
+  {% endif %}
 
 </div>
         </div>

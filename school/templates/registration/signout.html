@@ -1,7 +1,9 @@
 {% extends "base_template.html" %}
-{% extends "base_generic.html" %}
 
 {% block content %}
+<div class="container">
   <p>Logged out!</p>
   <a href="{% url 'login'%}">Click here to login again.</a>
+</div>
+ 
 {% endblock %}
