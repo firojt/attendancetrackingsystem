@@ -63,6 +63,7 @@ class AttendanceRecord:
     studentName : str
     attendanceDate : date
     isPresent : bool
+    schooloff: bool
 
     
 
@@ -95,6 +96,13 @@ def wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList):
                 return attendance['isPresent']
     return False
   
+def alldays(d, end, excluded=(9,10)):
+    days = []
+    while d <= end:
+        if d.isoweekday() not in excluded:
+            days.append(d)
+        d += datetime.timedelta(days=1)
+    return days
 
 def getListofAttendanceRecord(course, student):
     listofAttendanceRecord = []
@@ -106,13 +114,16 @@ def getListofAttendanceRecord(course, student):
     courseStartDate = Course.objects.filter(name=course).first().classStartDate
     courseEndDate = Course.objects.filter(name=course).first().classEndDate
     listOfSchoolDays = workdays(courseStartDate, date.today()) 
-    for schoolDay in listOfSchoolDays:
+    allSchoolDays = alldays(courseStartDate, date.today()) 
+    for schoolDay in allSchoolDays:
         everyDayAttendance = AttendanceRecord()
         isPresentOnthisDay = wasStudentPresentOnthisDay(schoolDay, course, student, list_attendanceList)
         everyDayAttendance.courseName = course
         everyDayAttendance.studentName = student
         everyDayAttendance.attendanceDate = schoolDay
         everyDayAttendance.isPresent = isPresentOnthisDay
+        if (schoolDay not in listOfSchoolDays):
+            everyDayAttendance.schooloff = True
         listofAttendanceRecord.append(everyDayAttendance)
     return listofAttendanceRecord
 

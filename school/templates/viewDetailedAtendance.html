@@ -16,10 +16,14 @@
                     <th scope="row">{{eachRecord.courseName}}</th>
                     <td>{{eachRecord.studentName}}</td>
                     <td>{{eachRecord.attendanceDate}}</td>
-                    {% if eachRecord.isPresent%}
-                    <td class="btn-success">Present</td>
+                    {% if eachRecord.schooloff%}
+                    <td class="btn-warning">School Off</td>
                     {% else %}
-                    <td class="btn-danger">Absent</td>
+                        {% if eachRecord.isPresent%}
+                        <td class="btn-success">Present</td>
+                        {% else %}
+                        <td class="btn-danger">Absent</td>
+                        {%endif%}
                     {%endif%}
                 </tr> {% endfor %} </tbody>
         </table>
