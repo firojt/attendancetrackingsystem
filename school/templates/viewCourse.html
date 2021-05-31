@@ -5,28 +5,30 @@
 <div class = "container">
   
   <br/> <br/> <br/>
-       
+       <!-- courseName = {{courseName}} -->
        <table class="table table-striped">
           <thead>
             <tr>
               <th scope="col">Course</th>
               <th scope="col">Student</th>
-              <th scope="col">Total Attendance Upto Today</th>
-              <th scope="col">Total Attendance Percentage</th>
+              <th scope="col">Current Attendance</th>
+              <th scope="col">Total Attendance</th>
             </tr>
           </thead>
           <tbody>
             <tr >
               
-              {% for attendance in attendances %}
-              {% if attendance.course|stringformat:"s" == course|stringformat:"s" %}
-              <th scope="row">{{attendance.course}}</th>
-              <td>{{attendance.student}}</td>
-              <td>{{attendance.totalAttendanceUptoToday}}</td>
-              <td>{% widthratio attendance.totalAttendanceUptoToday attendance.course.totalClassDay 100 %} %</td>
+              {% for each in list_courseDetailedViewTeacher %}
+            
+              <th scope="row">{{courseName}}</th>
+              <td>{{each.student}}</td>
+              <td>{{each.totalAttendanceUptoToday}} / {{uptoTodaySchoolDays}} ({% widthratio each.totalAttendanceUptoToday uptoTodaySchoolDays 100 %} %)</td>
+              <td>{{each.totalAttendanceUptoToday}} / {{totalSchoolDays}} ({% widthratio each.totalAttendanceUptoToday totalSchoolDays 100 %} %)</td>
+              <!-- <td>{% widthratio each.totalAttendanceUptoToday uptoTodaySchoolDays 100 %} %</td> -->
+              
               
             </tr>
-            {% endif %}
+           
             {% endfor %}
            
           </tbody>

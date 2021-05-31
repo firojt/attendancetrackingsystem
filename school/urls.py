@@ -17,9 +17,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home_template),
     path('courses/', views.CourseListView.as_view()),
-    path('logout/', views.logout),
+    path('signout/', views.signout, name='signout'),
     path('student/', views.studentAndCourseView),
     path('student/add/', views.studentAndCourseAddView),
+    path('student/view/', views.studentDetailedView),
     path('teacher/course/view', views.viewCourse),
-    path('teacher/', views.teacherView),
+    path('teacher/', views.teacherPageView),
 ]
